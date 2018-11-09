@@ -11,3 +11,7 @@
 .tds-login__button {
   margin-right: 0;
 }
+
+.tds-login__error {
+  color: #c33;
+}

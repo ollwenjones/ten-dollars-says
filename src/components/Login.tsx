@@ -19,18 +19,18 @@ export interface LoginProps extends SessionChangeHandler {}
 interface LoginState {
   userId: string;
   password: string;
-  sessionId: string;
   error?: boolean;
 }
 
 const initialState: LoginState = {
   password: "",
-  sessionId: "",
   userId: ""
 };
 
 export class Login extends React.Component<LoginProps, LoginState> {
   state = { ...initialState };
+
+  getSessionId = () => AuthApi.getSessionId();
 
   onUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ userId: e.currentTarget.value });
@@ -43,17 +43,17 @@ export class Login extends React.Component<LoginProps, LoginState> {
       return;
     }
     AuthApi.login(this.state.userId, this.state.password)
-      .then(sessionId => {
-        this.setState({ sessionId });
+      .then(id => {
+        this.setState(initialState);
       })
       .catch(reason => {
-        this.setState({ error: true, sessionId: "" });
+        this.setState({ error: true });
       });
   };
 
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // keep default from refreshing the page.
-    if (this.state.sessionId) {
+    if (AuthApi.getSessionId()) {
       this.onLogout();
     } else {
       this.onLogin();
@@ -61,16 +61,25 @@ export class Login extends React.Component<LoginProps, LoginState> {
   };
 
   onLogout = () => {
-    this.setState({ sessionId: "" });
+    AuthApi.logout();
+    this.setState({ error: false });
     this.props.onSessionChange(false);
   };
 
   disableSubmission = () => !this.state.userId || !this.state.password;
 
+  getWarning = () =>
+    this.state.error && (
+      <figure className="tds-login__error">
+        Incorrect User ID or Password
+      </figure>
+    );
+
   public render() {
+    const sessionId = AuthApi.getSessionId();
     return (
       <form className="tds-login" onSubmit={this.onSubmit}>
-        {!this.state.sessionId ? (
+        {!sessionId ? (
           [
             <input
               key="userId"
@@ -89,15 +98,16 @@ export class Login extends React.Component<LoginProps, LoginState> {
             />,
             <button
               key="submit"
+              type="submit"
               className="tds-login__button"
-              onClick={this.onLogin}
               disabled={this.disableSubmission()}
             >
               Login
-            </button>
+            </button>,
+            this.getWarning()
           ]
         ) : (
-          <button className="tds-login__button" onClick={this.onLogout}>
+          <button className="tds-login__button" type="submit">
             Log Out
           </button>
         )}
