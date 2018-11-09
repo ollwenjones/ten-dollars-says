@@ -1,0 +1,19 @@
+.tds-login {
+  display: flex;
+  flex-direction: column;
+  width: 8rem;
+}
+
+.tds-login .input {
+  padding: 1rem 1rem 0;
+}
+
+.tds-login .label {
+  width: 4rem;
+  display: block;
+}
+
+.tds-login .button {
+  width: 4rem;
+  margin: 1rem;
+}
