@@ -1,11 +1,6 @@
-.tds-login {
-  display: flex;
-  flex-direction: column;
-  width: 8rem;
-}
-
-.tds-login .input {
-  padding: 1rem 1rem 0;
+.tds-login__input,
+.tds-login__button {
+  margin: 0.5rem 1rem 0 0;
 }
 
 .tds-login .label {
@@ -13,7 +8,6 @@
   display: block;
 }
 
-.tds-login .button {
-  width: 4rem;
-  margin: 1rem;
+.tds-login__button {
+  margin-right: 0;
 }
