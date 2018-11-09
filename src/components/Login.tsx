@@ -97,7 +97,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
             </button>
           ]
         ) : (
-          <button className="button" onClick={this.onLogout}>
+          <button className="tds-login__button" onClick={this.onLogout}>
             Log Out
           </button>
         )}
