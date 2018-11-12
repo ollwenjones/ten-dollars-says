@@ -33,8 +33,9 @@ export const AuthApi = {
       )
         .then(response =>
           response.json().then((json: ILoginJson) => {
-            Cookies.set(SESSION_ID_COOKIE, sessionIdSelector);
-            resolve(json.LoginUserResult.SessionValue);
+            const id = sessionIdSelector(json.LoginUserResult);
+            Cookies.set(SESSION_ID_COOKIE, id);
+            resolve(id);
           })
         )
         .catch(reason => {
