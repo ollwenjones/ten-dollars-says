@@ -2,6 +2,10 @@ import * as React from "react";
 import { AuthApi } from "src/rest-api/AuthApi";
 import "./Login.css";
 
+export interface SessionObserver {
+  isGoodSession: boolean;
+}
+
 export interface SessionChangeHandler {
   /**
    * This is kind of a hack to keep the app component slim,
@@ -30,6 +34,13 @@ const initialState: LoginState = {
 export class Login extends React.Component<LoginProps, LoginState> {
   state = { ...initialState };
 
+  componentDidMount() {
+    // when initializing, need to notify after check.
+    if (AuthApi.getSessionId()) {
+      this.props.onSessionChange(true);
+    }
+  }
+
   getSessionId = () => AuthApi.getSessionId();
 
   onUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -45,6 +56,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
     AuthApi.login(this.state.userId, this.state.password)
       .then(id => {
         this.setState(initialState);
+        this.props.onSessionChange(true);
       })
       .catch(reason => {
         this.setState({ error: true });
@@ -70,7 +82,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
 
   getWarning = () =>
     this.state.error && (
-      <figure className="tds-login__error">
+      <figure className="tds-login__error" key="login-error">
         Incorrect User ID or Password
       </figure>
     );
