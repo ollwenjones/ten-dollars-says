@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./App.css";
+import MainContents from "./components/MainContents";
 import MainHeader from "./components/MainHeader";
 
 interface AppState {
@@ -7,14 +8,16 @@ interface AppState {
 }
 
 class App extends React.Component<{}, AppState> {
-  onSessionChange = (isGoodSession: boolean) =>
+  state = { isGoodSession: false };
+  onSessionChange = (isGoodSession: boolean) => {
     this.setState({ isGoodSession });
+  };
 
   public render() {
     return (
       <div className="App">
         <MainHeader onSessionChange={this.onSessionChange} />
-        <section className="App-content" />
+        <MainContents isGoodSession={this.state.isGoodSession} />
       </div>
     );
   }
