@@ -7,11 +7,10 @@ body,
 }
 
 .App {
-  text-align: center;
   display: flex;
   flex-direction: column;
 }
 
-.App-content {
+.main-contents {
   flex: 1;
 }

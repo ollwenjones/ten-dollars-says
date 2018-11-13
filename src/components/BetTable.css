@@ -1,0 +1,19 @@
+/* .tds-bets {}
+*/
+
+.tds-bets__title {
+  margin-bottom: 0.2rem;
+}
+.tds-bets__table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: solid 2px #222;
+}
+
+.tds-bets__table__row:nth-child(even) {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.tds-bets__table__row > td {
+  padding: 0.4rem;
+}

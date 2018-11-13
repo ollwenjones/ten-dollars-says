@@ -1,5 +1,7 @@
 import * as React from "react";
+import CompletedBets from "./CompletedBets";
 import { SessionObserver } from "./Login";
+import "./MainContents.css";
 import OpenBets from "./OpenBets";
 
 // tslint:disable-next-line:no-empty-interface // prefer to leave these to add to later. Prop aggregation.
@@ -12,8 +14,9 @@ export default class MainContents extends React.Component<
   public render() {
     return (
       this.props.isGoodSession && (
-        <section className="App-content">
+        <section className="main-contents">
           <OpenBets />
+          <CompletedBets />
         </section>
       )
     );

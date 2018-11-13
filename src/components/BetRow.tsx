@@ -17,7 +17,7 @@ export default class BetTableRow extends React.Component<
   public render() {
     const { bet } = this.props;
     return (
-      <tr>
+      <tr className="tds-bets__table__row">
         <td>{getBetName(bet)}</td>
         <td>{getBetDateCreated(bet)}</td>
         <td>{getBetJudge(bet)}</td>

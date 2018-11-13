@@ -1,8 +1,9 @@
+import * as classNames from "classnames";
 import * as React from "react";
 import { Bet } from "src/rest-api/Bet";
+import "./BetTable.css";
 
-//
-export interface BetTableProps {
+export interface BetTableProps extends React.HTMLProps<{}> {
   apiMethod: () => Promise<Bet[]>;
   children: (props: BetTableRenderProps) => JSX.Element[];
 }
@@ -38,7 +39,8 @@ export default class BetTable extends React.Component<
 
   public render() {
     return (
-      <section className="tds-bets">
+      <section className={classNames("tds-bets", this.props.className)}>
+        <h4 className="tds-bets__title">{this.props.title}</h4>
         <table className="tds-bets__table">
           <tbody>{this.props.children({ bets: this.state.bets })}</tbody>
         </table>
