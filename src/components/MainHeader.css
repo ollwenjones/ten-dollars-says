@@ -6,7 +6,7 @@
 }
 
 .tds-header__logo {
-  animation: App-logo-spin infinite 20s linear;
+  animation: Logo-zoom 0.5s ease-in;
   height: 2rem;
 }
 
@@ -23,11 +23,11 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
+@keyframes Logo-zoom {
   from {
-    transform: rotate(0deg);
+    transform: translate3d(20rem, 20rem, 0) scale3d(20, 20, 1);
   }
   to {
-    transform: rotate(360deg);
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
   }
 }
