@@ -1,0 +1,12 @@
+.tds-wins-tile {
+  padding: 1rem;
+  flex: 1;
+}
+
+.tds-wins-tile:nth-child(odd) {
+  background: #ebf4ce;
+}
+
+.tds-wins-tile__title {
+  margin-top: 0;
+}

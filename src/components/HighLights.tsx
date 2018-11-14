@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./Highlights.css";
 import MostWins from "./MostWins";
 import MostWinsPercent from "./MostWinsPercent";
 
