@@ -1,4 +1,12 @@
 import * as React from "react";
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from "recharts";
 import { BetsApi } from "src/rest-api/BetsApi";
 import "./LeaderBoard.css";
 
@@ -38,24 +46,30 @@ export class LeaderBoard extends React.Component<{}, LeaderBoardState> {
     return countByName;
   };
 
-  getLeaders = () => {
-    // charting library if there's time
+  getData = () => {
     const winners = this.getWinsByName();
-    return Object.keys(winners).map(winner => (
-      <tr key={winner}>
-        <td>{winner}</td>
-        <td>{winners[winner]}</td>
-      </tr>
-    ));
+    return Object.keys(winners).map(name => ({
+      name,
+      wins: winners[name]
+    }));
   };
 
   public render() {
     return (
       <section className="tds-leaderboard">
         <h4 className="tds-leaderboard__title">Leaderboard</h4>
-        <table>
-          <tbody>{this.getLeaders()}</tbody>
-        </table>
+        <ResponsiveContainer width="90%" height={250}>
+          <BarChart
+            data={this.getData()}
+            layout="vertical"
+            margin={{ top: 0, right: 0, left: 150, bottom: 0 }}
+          >
+            <XAxis type="number" />
+            <YAxis type="category" dataKey="name" />
+            <Tooltip />
+            <Bar dataKey="wins" fill="#bada55" />
+          </BarChart>
+        </ResponsiveContainer>
       </section>
     );
   }

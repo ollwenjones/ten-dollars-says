@@ -1,5 +1,6 @@
 .tds-leaderboard {
   padding: 1rem;
+  flex: 1;
 }
 
 .tds-leaderboard__title {
