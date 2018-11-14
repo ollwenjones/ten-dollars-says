@@ -11,4 +11,5 @@
 .main-contents__stats {
   display: flex;
   flex-direction: row;
+  border-bottom: solid 2px #232;
 }
