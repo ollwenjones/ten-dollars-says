@@ -5,7 +5,7 @@ import MostWins from "./MostWins";
 const MostWinsPercent: React.SFC<{}> = () => {
   return (
     <MostWins
-      title="Highest Percent"
+      title="Best Percentage"
       fetchMethod={TileFlowApi.fetchHighestPercent}
     />
   );
