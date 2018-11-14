@@ -1,5 +1,6 @@
 import * as React from "react";
 import CompletedBets from "./CompletedBets";
+import Highlights from "./HighLights";
 import { SessionObserver } from "./Login";
 import "./MainContents.css";
 import OpenBets from "./OpenBets";
@@ -16,6 +17,7 @@ export default class MainContents extends React.Component<
     return (
       this.props.isGoodSession && (
         <section className="main-contents">
+          <Highlights />
           <OpenBets />
           <CompletedBets />
           <PartyReport />
