@@ -1,5 +1,4 @@
 .main-contents {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -7,4 +6,9 @@
 .main-contents .open-bets,
 .main-contents .completed-bets {
   flex: 1;
+}
+
+.main-contents__stats {
+  display: flex;
+  flex-direction: row;
 }

@@ -39,7 +39,7 @@ export default class BetTable extends React.Component<
 
   public render() {
     return (
-      <section className={classNames("tds-bets", this.props.className)}>
+      <section className={classNames("tds-bets__list", this.props.className)}>
         <h4 className="tds-bets__title">{this.props.title}</h4>
         <table className="tds-bets__table">
           <tbody>{this.props.children({ bets: this.state.bets })}</tbody>
