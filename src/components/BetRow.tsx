@@ -21,9 +21,11 @@ export default class BetTableRow extends React.Component<
     const { bet } = this.props;
     return (
       <tr className="tds-bets__table__row">
-        <td>{getBetName(bet)}</td>
-        <td>{format(getBetDateCreated(bet), DATE_FORMAT)}</td>
-        <td>{getBetJudge(bet)}</td>
+        <td className="tds-bets__table__name">{getBetName(bet)}</td>
+        <td className="tds-bets__table__date">
+          {format(getBetDateCreated(bet), DATE_FORMAT)}
+        </td>
+        <td className="tds-bets__table__judge">{getBetJudge(bet)}</td>
       </tr>
     );
   }

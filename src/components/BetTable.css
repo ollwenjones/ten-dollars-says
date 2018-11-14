@@ -17,3 +17,10 @@
 .tds-bets__table__row > td {
   padding: 0.4rem;
 }
+
+.tds-bets__table__date {
+  width: 12rem;
+}
+.tds-bets__table__judge {
+  width: 12rem;
+}
