@@ -14,3 +14,12 @@ body,
 .main-contents {
   flex: 1;
 }
+
+.App button {
+  background: #5d6e5d;
+  border: solid 2px #dce4d4;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #dce4d4;
+  box-shadow: 2px 2px 4px rgba(20, 60, 20, 0.5);
+  cursor: pointer;
+}
