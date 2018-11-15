@@ -1,0 +1,13 @@
+.wrapped-input {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.wrapped-input__label {
+  font-size: 0.75rem;
+  display: block;
+  line-height: 1.2rem;
+}
+
+/* .wrapped-input > input {
+} */

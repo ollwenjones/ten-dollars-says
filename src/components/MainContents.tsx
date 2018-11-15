@@ -6,7 +6,9 @@ import { SessionObserver } from "./Login";
 import "./MainContents.css";
 
 // tslint:disable-next-line:no-empty-interface // prefer to leave these to add to later. Prop aggregation.
-export interface MainContentsProps extends SessionObserver {}
+export interface MainContentsProps extends SessionObserver {
+  onCreateBet: () => void;
+}
 
 export default class MainContents extends React.Component<
   MainContentsProps,
@@ -21,6 +23,9 @@ export default class MainContents extends React.Component<
             <LeaderBoard />
           </div>
           <Bets />
+          <button className="create-bet-btn" onClick={this.props.onCreateBet}>
+            Throw Down!
+          </button>
         </section>
       )
     );

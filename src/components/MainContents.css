@@ -13,3 +13,17 @@
   flex-direction: row;
   border-bottom: solid 2px #232;
 }
+
+.main-contents > .create-bet-btn {
+  position: absolute;
+  top: 3rem;
+  right: 6rem;
+  transform: rotate(12deg);
+  border-radius: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: #5d6e5d;
+  border: solid 2px #dce4d4;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #dce4d4;
+}
