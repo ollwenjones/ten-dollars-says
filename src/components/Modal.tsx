@@ -1,36 +1,27 @@
 import * as React from "react";
-import { createPortal } from "react-dom";
+import * as ReactModal from "react-modal";
+import "./Modal.css";
 
 interface ModalProps {
-  title: string;
-  show?: boolean;
-  onClose?: () => void;
+  isOpen: boolean;
+  onRequestClose?: () => void;
 }
 
-export default class Modal extends React.Component<ModalProps, any> {
-  target = document.createElement("div");
+/**
+ * Simple ReactModal wrapper to normalize styling
+ * @param props
+ */
+const Modal: React.SFC<ModalProps> = ({ isOpen, onRequestClose, children }) => {
+  return (
+    <ReactModal
+      isOpen={isOpen}
+      className="modal__contents"
+      overlayClassName="modal__overlay"
+      onRequestClose={onRequestClose}
+    >
+      {children}
+    </ReactModal>
+  );
+};
 
-  componentDidMount() {
-    document.appendChild(this.target);
-  }
-
-  componentWillUnmount() {
-    document.removeChild(this.target);
-  }
-
-  public render() {
-    createPortal(
-      <div className="modal">
-        <div className="modal__scrim" />
-        <div className="modal__contents">
-          {this.props.title ? (
-            <h4 className="modal__title">{this.props.title}</h4>
-          ) : null}
-          {this.props.children}
-        </div>
-      </div>,
-      this.target
-    );
-    return null;
-  }
-}
+export default Modal;
