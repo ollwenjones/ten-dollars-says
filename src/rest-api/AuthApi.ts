@@ -13,6 +13,7 @@ export interface ILoginUserResult {
 // const SESSION_ID_COOKIE = "DecisionsSessionID";
 
 const SESSION_ID_COOKIE = "TdsSessionId";
+const USER_COOKIE = "DecisionsUsername";
 
 /**
  * Auth and session related API calls.
@@ -22,6 +23,10 @@ export const AuthApi = {
    * @return the current session ID (stored in a session cookie)
    */
   getSessionId: () => Cookies.get(SESSION_ID_COOKIE),
+  /**
+   * Current username
+   */
+  getSessionUserName: () => Cookies.get(USER_COOKIE),
   /**
    * Make REST call to log in.
    * @return promise that resolves the cookie.
