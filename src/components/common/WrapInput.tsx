@@ -2,13 +2,13 @@ import * as React from "react";
 import "./WrapInput.css";
 
 interface WrapInputProps {
-  id: string;
+  htmlFor: string;
   label: string;
 }
 
-const WrapInput: React.SFC<WrapInputProps> = ({ label, children }) => {
+const WrapInput: React.SFC<WrapInputProps> = ({ htmlFor, label, children }) => {
   return (
-    <label htmlFor="id" className="wrapped-input">
+    <label htmlFor={htmlFor} className="wrapped-input">
       <span className="wrapped-input__label">{label}</span>
       {children}
     </label>
