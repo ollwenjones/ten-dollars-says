@@ -1,4 +1,4 @@
-import { AuthApi } from "./AuthApi";
+import { CreateBetFormState } from "src/components/CreateBetForm";
 import { Party } from "./Party";
 
 export interface CreatingBet {
@@ -19,21 +19,23 @@ export interface CreatingBetPayload {
   Judge: string;
   Notes: string;
   Parties: Party[];
+  Description: string;
+  Amount: number;
 }
 
 export function makeCreatingBetObject(
   name: string,
-  deadline: string,
-  parties: Party[],
-  notes = ""
+  { deadline, description, parties, judge, notes }: CreateBetFormState
 ): CreatingBetPayload {
   return {
     "Bet Name": name,
-    Deadline: deadline,
+    Deadline: deadline.toISOString(),
     outputtype: "Json",
     // tslint:disable-next-line:object-literal-sort-keys // because it's wrong!!
-    Judge: AuthApi.getSessionUserName() || "",
+    Judge: judge,
     Notes: notes,
-    Parties: parties
+    Parties: parties,
+    Description: description,
+    Amount: 10
   };
 }

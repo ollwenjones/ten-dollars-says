@@ -1,6 +1,11 @@
 import { addWeeks, format } from "date-fns";
 import * as React from "react";
 import { AuthApi } from "src/rest-api/AuthApi";
+import { BetsApi } from "src/rest-api/BetsApi";
+import {
+  CreatingBetPayload,
+  makeCreatingBetObject
+} from "src/rest-api/CreatingBet";
 import {
   getBaseParties,
   getBasePartyReqFields,
@@ -58,13 +63,16 @@ export default class CreateBetForm extends React.Component<
   onDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ deadline: e.target.value });
 
+  getModel = (): CreatingBetPayload =>
+    makeCreatingBetObject(this.props.betName, this.state);
+
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    this.props.onDone();
-    // TODO extract model
-    // TODO trigger async action
+    BetsApi.createBet(this.getModel())
+      .then(this.props.onDone)
+      .catch(this.props.onDone);
+
     // TODO loader during async action
-    // TODO close modal on success
   };
 
   onPartyUpdate = (index: number, party: Party) => {
