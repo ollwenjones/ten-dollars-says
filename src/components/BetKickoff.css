@@ -1,5 +1,8 @@
 .bet-kickoff {
-  padding: 0.4rem 0.5rem;
+  box-sizing: border-box;
+  padding: 0.4rem 2rem 0.4rem 0.5rem;
+  display: flex;
+  width: 100%;
 }
 
 .bet-kickoff .create-bet-btn {
@@ -12,6 +15,7 @@
 }
 
 .bet-kickoff .bet-kickoff-name {
+  flex: 1;
   margin-right: 1rem;
   padding: 0.25rem;
   font-size: 1.5rem;
