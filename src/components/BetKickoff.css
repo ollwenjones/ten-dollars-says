@@ -1,0 +1,21 @@
+.bet-kickoff {
+  padding: 0.4rem 0.5rem;
+}
+
+.bet-kickoff .create-bet-btn {
+  position: relative;
+  top: 1rem;
+  transform: rotate(12deg);
+  border-radius: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.bet-kickoff .bet-kickoff-name {
+  margin-right: 1rem;
+  padding: 0.25rem;
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: none;
+  color: white;
+}

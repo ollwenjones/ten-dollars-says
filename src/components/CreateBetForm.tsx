@@ -1,3 +1,4 @@
+import { addWeeks, format } from "date-fns";
 import * as React from "react";
 import { Party } from "src/rest-api/Party";
 import WrapInput from "./common/WrapInput";
@@ -6,12 +7,13 @@ import Modal from "./Modal";
 
 // tslint:disable-next-line:no-empty-interface
 export interface CreateBetFormProps {
+  betName: string;
   show: boolean;
   onDone: () => void;
+  onBetNameChange: (name: string) => void;
 }
 
 export interface CreateBetFormState {
-  name: string;
   description: string;
   parties: Party[];
   judge: string;
@@ -20,44 +22,85 @@ export interface CreateBetFormState {
   notes: string;
 }
 
+const defaultState: CreateBetFormState = {
+  deadline: new Date(),
+  description: "",
+  judge: "",
+  notes: "",
+  parties: []
+  // wager: number,
+};
+
 export default class CreateBetForm extends React.Component<
   CreateBetFormProps,
   any
 > {
+  state = { ...defaultState };
+
   onNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ name: e.target.value });
+    this.props.onBetNameChange(e.target.value);
 
   onDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ name: e.target.value });
+    this.setState({ description: e.target.value });
 
   onJudgeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ name: e.target.value });
+    this.setState({ judge: e.target.value });
 
   onNotesChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    this.setState({ name: e.target.value });
+    this.setState({ notes: e.target.value });
+
+  onDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    this.setState({ deadline: e.target.value });
 
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     this.props.onDone();
+    // TODO extract model
+    // TODO trigger async action
+    // TODO loader during async action
+    // TODO close modal on success
   };
+
+  componentDidMount() {
+    this.setState({
+      deadline: addWeeks(new Date(), 1)
+    });
+  }
 
   public render() {
     return (
       <Modal isOpen={this.props.show} onRequestClose={this.props.onDone}>
-        <h3 className="modal__title">Throw Down!</h3>
+        <h3 className="modal__title">
+          $10 Says...
+          <input
+            id="name"
+            className="modal__title__input"
+            type="text"
+            value={this.props.betName}
+            onChange={this.onNameChange}
+          />
+        </h3>
         <form className="create-bet-form modal__form">
-          <WrapInput id="name" label="Name">
-            <input id="name" type="text" />
+          <WrapInput htmlFor="desc" label="Description">
+            <input
+              id="desc"
+              type="text"
+              value={this.state.description}
+              onChange={this.onDescriptionChange}
+            />
           </WrapInput>
-          <WrapInput id="desc" label="Description">
-            <input id="desc" type="text" />
-          </WrapInput>
-          <WrapInput id="deadline" label="Deadline">
-            <input type="datetime-local" />
+          <WrapInput htmlFor="deadline" label="Deadline">
+            <input
+              type="date"
+              value={format(this.state.deadline, "YYYY-MM-DD")}
+              onChange={this.onDeadlineChange}
+            />
           </WrapInput>
           <div className="modal__buttons">
-            <button onClick={this.props.onDone}>Cancel</button>
-            <button>Submit Bet</button>
+            <button className="inverse" onClick={this.props.onDone}>
+              Cancel
+            </button>
+            <button type="submit">Throw down!</button>
           </div>
         </form>
       </Modal>

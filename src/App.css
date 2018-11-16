@@ -15,11 +15,36 @@ body,
   flex: 1;
 }
 
-.App button {
+.App button,
+.modal__contents button {
+  position: relative;
   background: #5d6e5d;
-  border: solid 2px #dce4d4;
+  border: solid 0.125rem #dce4d4;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: #dce4d4;
   box-shadow: 2px 2px 4px rgba(20, 60, 20, 0.5);
   cursor: pointer;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
 }
+
+.App button.inverse,
+.modal__contents button.inverse {
+  border-color: #5d6e5d;
+  background: #dce4d4;
+  color: #5d6e5d;
+  box-shadow: none;
+}
+/* try to make it look like a stack of dollars, but this isn't the way */
+/* .App button::before,
+.modal__contents button::before {
+  position: absolute;
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: rotate(3deg);
+  background: #5d6e5d;
+  z-index: -1;
+} */

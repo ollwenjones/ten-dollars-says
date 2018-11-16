@@ -6,16 +6,26 @@ import MainHeader from "./components/MainHeader";
 
 interface AppState {
   isGoodSession: boolean;
+  newBetName: string;
   creatingBet: boolean;
 }
 
+const defaultAppState: AppState = {
+  creatingBet: false,
+  isGoodSession: false,
+  newBetName: ""
+};
+
 class App extends React.Component<{}, AppState> {
-  state = { isGoodSession: false, creatingBet: true };
+  state = { ...defaultAppState };
 
   onSessionChange = (isGoodSession: boolean) => {
-    this.setState({ isGoodSession });
+    // reset other things on logout
+    const newState = isGoodSession ? { isGoodSession } : { ...defaultAppState };
+    this.setState(newState);
   };
 
+  onBetNameChange = (newBetName: string) => this.setState({ newBetName });
   onCreateBet = () => this.setState({ creatingBet: true });
 
   onCreateBetDone = () => this.setState({ creatingBet: false });
@@ -23,12 +33,17 @@ class App extends React.Component<{}, AppState> {
   public render() {
     return (
       <div className="App">
-        <MainHeader onSessionChange={this.onSessionChange} />
-        <MainContents
+        <MainHeader
           isGoodSession={this.state.isGoodSession}
           onCreateBet={this.onCreateBet}
+          newBetName={this.state.newBetName}
+          onSessionChange={this.onSessionChange}
+          onBetNameChange={this.onBetNameChange}
         />
+        <MainContents isGoodSession={this.state.isGoodSession} />
         <CreateBetForm
+          betName={this.state.newBetName}
+          onBetNameChange={this.onBetNameChange}
           show={this.state.creatingBet}
           onDone={this.onCreateBetDone}
         />

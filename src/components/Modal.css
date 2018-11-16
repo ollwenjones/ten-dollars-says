@@ -17,6 +17,17 @@
   color: #232;
 }
 
+.modal__title__input {
+  margin: 0 0.5rem;
+  padding: 0.2rem;
+  background-color: #ebf4ce;
+  color: #232;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: rgba(20, 40, 20, 0.2);
+  border: none;
+}
+
 .modal__contents {
   z-index: 1;
   background: white;
