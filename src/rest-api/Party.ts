@@ -43,3 +43,49 @@ export function getBasePartyReqFields(): Party {
     ModifiedDate: new Date().toISOString()
   };
 }
+
+export function getBaseParties(count: number) {
+  const parties: Party[] = [];
+  for (let i = 0; i < count; i++) {
+    parties.push(getBasePartyReqFields());
+  }
+  return parties;
+}
+
+/**
+ * Get a new party object (immutable pattern).
+ * @param name of party
+ * @param position of party
+ * @param previous optional previous party details
+ * @returns new party object.
+ */
+export function updateParty(
+  name: string,
+  position: string,
+  previous = getBasePartyReqFields()
+): Party {
+  return {
+    ...previous,
+    PartyName: name,
+    Position: position
+  };
+}
+
+/**
+ * @param name to set
+ * @param party to update
+ * @returns new party object.
+ */
+export function updatePartyName(name: string, party: Party) {
+  return updateParty(name, party.Position || "", party);
+}
+
+/**
+ *
+ * @param betPosition to set
+ * @param party to update
+ * @returns new party object.
+ */
+export function updatePartyBetPosition(betPosition: string, party: Party) {
+  return updateParty(party.PartyName || "", betPosition, party);
+}
