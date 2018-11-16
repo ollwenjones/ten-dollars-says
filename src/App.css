@@ -48,3 +48,11 @@ body,
   background: #5d6e5d;
   z-index: -1;
 } */
+
+.flex1 {
+  flex: 1;
+}
+
+.gutter-right {
+  margin-right: 1rem;
+}
