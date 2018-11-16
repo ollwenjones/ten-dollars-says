@@ -40,8 +40,6 @@ function getWrappedBetFetch(reportId: string) {
         response =>
           response.json && // 403s still trigger fetch.then!!1?
           response.json().then((json: BetResult) => {
-            // tslint:disable-next-line:no-console
-            console.log(json);
             resolve(json.Rows);
           })
       )
