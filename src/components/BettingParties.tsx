@@ -16,6 +16,7 @@ export default class BettingParties extends React.Component<
   getPartyRows = () =>
     this.props.parties.map((party, index) => (
       <PartyFields
+        key={index}
         party={party}
         index={index}
         onChange={this.props.onPartyUpdate}
