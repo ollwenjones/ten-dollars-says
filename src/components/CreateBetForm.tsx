@@ -46,7 +46,7 @@ export default class CreateBetForm extends React.Component<
   onJudgeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ judge: e.target.value });
 
-  onNotesChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  onNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     this.setState({ notes: e.target.value });
 
   onDeadlineChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -83,6 +83,7 @@ export default class CreateBetForm extends React.Component<
         <form className="create-bet-form modal__form">
           <WrapInput htmlFor="desc" label="Description">
             <input
+              className="create-bet-form__description"
               id="desc"
               type="text"
               value={this.state.description}
@@ -94,6 +95,13 @@ export default class CreateBetForm extends React.Component<
               type="date"
               value={format(this.state.deadline, "YYYY-MM-DD")}
               onChange={this.onDeadlineChange}
+            />
+          </WrapInput>
+          <WrapInput htmlFor="notes" label="Notes">
+            <textarea
+              value={this.state.notes}
+              onChange={this.onNotesChange}
+              className="create-bet-form__notes"
             />
           </WrapInput>
           <div className="modal__buttons">

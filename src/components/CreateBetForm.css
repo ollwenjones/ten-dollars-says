@@ -4,3 +4,11 @@
   background-color: #bada55;
   color: white;
 }
+
+.create-bet-form__description {
+  width: 100%;
+}
+
+.create-bet-form__notes {
+  width: 100%;
+}
