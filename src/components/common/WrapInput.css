@@ -14,7 +14,6 @@
 .wrapped-input > textarea {
   border: none;
   background: rgba(0, 0, 0, 0.1);
-  /* line-height: 1.5rem; */
   padding: 0.25rem;
   font-size: 0.875rem;
   box-sizing: border-box;
