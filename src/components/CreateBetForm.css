@@ -5,10 +5,16 @@
   color: white;
 }
 
-.create-bet-form__description {
+.create-bet-form__description,
+.create-bet-form__judge {
   width: 100%;
 }
 
 .create-bet-form__notes {
   width: 100%;
+}
+
+.create-bet-form__row {
+  display: flex;
+  flex-direction: row;
 }

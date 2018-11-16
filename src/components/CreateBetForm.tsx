@@ -1,6 +1,12 @@
 import { addWeeks, format } from "date-fns";
 import * as React from "react";
-import { Party } from "src/rest-api/Party";
+import { AuthApi } from "src/rest-api/AuthApi";
+import {
+  getBaseParties,
+  getBasePartyReqFields,
+  Party
+} from "src/rest-api/Party";
+import BettingParties from "./BettingParties";
 import WrapInput from "./common/WrapInput";
 import "./CreateBetForm.css";
 import Modal from "./Modal";
@@ -61,9 +67,23 @@ export default class CreateBetForm extends React.Component<
     // TODO close modal on success
   };
 
+  onPartyUpdate = (index: number, party: Party) => {
+    const parties = [...this.state.parties];
+    parties[index] = party;
+    this.setState({ parties });
+  };
+
+  addParty = () => {
+    const parties = [...this.state.parties];
+    parties.push(getBasePartyReqFields());
+    this.setState({ parties });
+  };
+
   componentDidMount() {
     this.setState({
-      deadline: addWeeks(new Date(), 1)
+      deadline: addWeeks(new Date(), 1),
+      judge: AuthApi.getSessionUserName(),
+      parties: getBaseParties(2)
     });
   }
 
@@ -80,7 +100,7 @@ export default class CreateBetForm extends React.Component<
             onChange={this.onNameChange}
           />
         </h3>
-        <form className="create-bet-form modal__form">
+        <form className="create-bet-form modal__form" onSubmit={this.onSubmit}>
           <WrapInput htmlFor="desc" label="Description">
             <input
               className="create-bet-form__description"
@@ -90,13 +110,31 @@ export default class CreateBetForm extends React.Component<
               onChange={this.onDescriptionChange}
             />
           </WrapInput>
-          <WrapInput htmlFor="deadline" label="Deadline">
-            <input
-              type="date"
-              value={format(this.state.deadline, "YYYY-MM-DD")}
-              onChange={this.onDeadlineChange}
-            />
-          </WrapInput>
+          <div className="create-bet-form__row">
+            <WrapInput
+              htmlFor="deadline"
+              label="Deadline"
+              className="gutter-right"
+            >
+              <input
+                type="date"
+                value={format(this.state.deadline, "YYYY-MM-DD")}
+                onChange={this.onDeadlineChange}
+              />
+            </WrapInput>
+            <WrapInput htmlFor="judge" label="Judge" className="flex1">
+              <input
+                value={this.state.judge}
+                onChange={this.onJudgeChange}
+                className="create-bet-form__judge"
+              />
+            </WrapInput>
+          </div>
+          <BettingParties
+            parties={this.state.parties}
+            onPartyUpdate={this.onPartyUpdate}
+            onAddParty={this.addParty}
+          />
           <WrapInput htmlFor="notes" label="Notes">
             <textarea
               value={this.state.notes}

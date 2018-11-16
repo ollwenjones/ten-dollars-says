@@ -1,0 +1,15 @@
+.party-fields {
+  display: flex;
+  flex-direction: row;
+  border-bottom: solid 1px #999999;
+  padding: 0.5rem;
+}
+
+.party-fields .wrapped-input {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.party-fields input {
+  width: 100%;
+}
