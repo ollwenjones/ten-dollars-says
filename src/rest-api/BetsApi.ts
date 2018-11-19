@@ -1,3 +1,4 @@
+import { DECISIONS_ROOT } from "./ApiConfig";
 import { AuthApi } from "./AuthApi";
 import { Bet } from "./Bet";
 import { CreatingBetPayload } from "./CreatingBet";
@@ -15,11 +16,12 @@ const PARTY_REPORT = "56ccdda8-bda2-11e8-a989-81c1bba3abd0";
 export const BetsApi = {
   createBet: (newBet: CreatingBetPayload) => {
     const sessionId = AuthApi.getSessionId();
-    const url = `?FlowId=f5aef800-b2c8-11e8-a987-c4660be71084&Action=api&sessionId=${sessionId}`;
+    const url = `${DECISIONS_ROOT}?FlowId=f5aef800-b2c8-11e8-a987-c4660be71084&Action=api&sessionId=${sessionId}`;
     return fetch(url, {
       body: JSON.stringify(newBet),
-      method: "POST"
-    } as any);
+      method: "POST",
+      mode: "cors"
+    });
   },
   fetchBetsCompleted: () => getWrappedBetFetch(BET_COMPLETED_ID),
   fetchBetsOpen: () => getWrappedBetFetch(BET_OPEN_ID),
@@ -30,12 +32,12 @@ export const BetsApi = {
 
 function getReportUrl(reportId: string) {
   const sessionId = AuthApi.getSessionId(); // TODO escape?
-  return `http://localhost/decisions/Primary/?ReportId=${reportId}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
+  return `${DECISIONS_ROOT}?ReportId=${reportId}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
 }
 
 function getWrappedBetFetch(reportId: string) {
   return new Promise<Bet[]>((resolve, reject) =>
-    fetch(getReportUrl(reportId))
+    fetch(getReportUrl(reportId), { mode: "cors" })
       .then(
         response =>
           response.json && // 403s still trigger fetch.then!!1?

@@ -1,3 +1,4 @@
+import { DECISIONS_ROOT } from "./ApiConfig";
 import { AuthApi } from "./AuthApi";
 import { TileData } from "./TileData";
 
@@ -22,7 +23,7 @@ export interface WinnerInfo {
 
 function getFlowUrl(id: string) {
   const sessionId = AuthApi.getSessionId(); // TODO escape?
-  return `http://localhost/decisions/Primary/?FlowId=${id}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
+  return `${DECISIONS_ROOT}?FlowId=${id}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
 }
 
 /**
