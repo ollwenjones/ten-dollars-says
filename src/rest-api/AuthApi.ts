@@ -31,15 +31,20 @@ export const AuthApi = {
    * Make REST call to log in.
    * @return promise that resolves the cookie.
    */
-  login: (userId: string, password: string) =>
+  login: (userid: string, password: string) =>
     new Promise<string>((resolve, reject) =>
-      fetch(
-        `/Primary/REST/AccountService/LoginUser?userid=${userId}&password=${password}&outputType=JSON`
-      )
+      fetch(`/Primary/REST/AccountService/LoginUser`, {
+        body: JSON.stringify({ userid, password, outputType: "JSON" }),
+        method: "POST",
+        mode: "cors"
+      })
         .then(response =>
           response.json().then((json: ILoginJson) => {
             const id = sessionIdSelector(json.LoginUserResult);
             Cookies.set(SESSION_ID_COOKIE, id);
+            // USER_COOKIE was being set by request headers before, or so I thought.
+            // not today... maybe because configuration is now CORS?
+            Cookies.set(USER_COOKIE, userid);
             resolve(id);
           })
         )
