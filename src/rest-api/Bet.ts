@@ -1,3 +1,5 @@
+import { Party } from "./Party";
+
 /**
  * Define model object type and selector functions for a "Bet"
  *
@@ -8,11 +10,15 @@
  * Bet data type
  */
 export interface Bet {
-  bet_name: string;
-  created_on_date: string; // is there a UTC string typescript type? e.g. "2018-11-12T10:12:36.29"
-  entity_id: string;
-  entity_type_name: string;
+  name: string;
+  // created_on_date: string; // is there a UTC string typescript type? e.g. "2018-11-12T10:12:36.29"
+  description: string;
+  parties: Party[];
   judge: string;
+  betId: string;
+  deadline: string; // ISO string
+  completed: boolean;
+  notes: string;
 }
 
 /* 
@@ -25,7 +31,11 @@ export interface Bet {
   Robust implementations include memoization. 
 */
 
-export const getBetName = (bet: Bet) => bet.bet_name;
-export const getBetDateCreated = (bet: Bet) => bet.created_on_date;
-export const getBetId = (bet: Bet) => bet.entity_id;
+export const getBetName = (bet: Bet) => bet.name;
+export const getBetDeadline = (bet: Bet) => bet.deadline;
+export const getBetId = (bet: Bet) => bet.betId;
 export const getBetJudge = (bet: Bet) => bet.judge;
+export const getBetNotes = (bet: Bet) => bet.notes;
+export const getBetDescription = (bet: Bet) => bet.description;
+export const getBetCompleted = (bet: Bet) => bet.completed;
+export const getBetParties = (bet: Bet) => bet.parties;

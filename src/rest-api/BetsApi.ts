@@ -1,52 +1,71 @@
-import { DECISIONS_ROOT } from "./ApiConfig";
-import { AuthApi } from "./AuthApi";
+import { getFlowAliasUrl, getFlowIdUrl, getReportUrl } from "./ApiHelpers";
 import { Bet } from "./Bet";
 import { CreatingBetPayload } from "./CreatingBet";
+import { JudgeBetPayload } from "./JudgeBet";
 
 export interface BetResult {
-  Rows: Bet[]; // because everything in Decisions is Pascal case?
+  result: {
+    bets: Bet[];
+  };
 }
 
 // is there a way to make these more friendly?
 // are they portable? (I'm guessing they are unique per decisions instance)
-const BET_OPEN_ID = "3869289d-bceb-11e8-a989-81c1bba3abd0";
-const BET_COMPLETED_ID = "ef1a1fa6-b5f8-11e8-a987-c4660be71084";
+const BET_ALIAS = "tds/bets";
 const PARTY_REPORT = "56ccdda8-bda2-11e8-a989-81c1bba3abd0";
 
 export const BetsApi = {
   createBet: (newBet: CreatingBetPayload) => {
-    const sessionId = AuthApi.getSessionId();
-    const url = `${DECISIONS_ROOT}?FlowId=f5aef800-b2c8-11e8-a987-c4660be71084&Action=api&sessionId=${sessionId}`;
+    const url = getFlowIdUrl("f5aef800-b2c8-11e8-a987-c4660be71084");
     return fetch(url, {
       body: JSON.stringify(newBet),
       method: "POST",
       mode: "cors"
     });
   },
-  fetchBetsCompleted: () => getWrappedBetFetch(BET_COMPLETED_ID),
-  fetchBetsOpen: () => getWrappedBetFetch(BET_OPEN_ID),
-  fetchPartyReport: () => getWrappedBetFetch(PARTY_REPORT)
+  fetchBetsCompleted: () => getWrappedBetFetch(true),
+  fetchBetsOpen: () => getWrappedBetFetch(false),
+  fetchPartyReport: () =>
+    new Promise<any[]>((resolve, reject) =>
+      fetch(getReportUrl(PARTY_REPORT), { mode: "cors" })
+        .then(
+          response =>
+            response.json && // 403s still trigger fetch.then!!1?
+            response.json().then((json: any) => {
+              resolve(json.Rows);
+            })
+        )
+        .catch(reason => {
+          reject(reason);
+        })
+    ),
+  judgeBet: (judgeBet: JudgeBetPayload) => {
+    const url = getFlowIdUrl("33bea154-e9e0-11e8-b592-c49ded2c5c02");
+    return fetch(url, {
+      body: JSON.stringify(judgeBet),
+      method: "POST",
+      mode: "cors"
+    });
+  }
 };
 
 /* hoisted helper functions: */
 
-function getReportUrl(reportId: string) {
-  const sessionId = AuthApi.getSessionId(); // TODO escape?
-  return `${DECISIONS_ROOT}?ReportId=${reportId}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
-}
-
-function getWrappedBetFetch(reportId: string) {
-  return new Promise<Bet[]>((resolve, reject) =>
-    fetch(getReportUrl(reportId), { mode: "cors" })
+function getWrappedBetFetch(completed: boolean) {
+  return new Promise<Bet[]>((resolve, reject) => {
+    const url = getFlowAliasUrl(BET_ALIAS) + `&completed=${completed}`;
+    return fetch(url, {
+      mode: "cors"
+    })
       .then(
         response =>
           response.json && // 403s still trigger fetch.then!!1?
           response.json().then((json: BetResult) => {
-            resolve(json.Rows);
+            resolve(json.result.bets);
           })
       )
       .catch(reason => {
         reject(reason);
-      })
-  );
+      });
+  });
 }
