@@ -64,7 +64,7 @@ export class LeaderBoard extends React.Component<{}, LeaderBoardState> {
             layout="vertical"
             margin={{ top: 0, right: 0, left: 150, bottom: 0 }}
           >
-            <XAxis type="number" />
+            <XAxis type="number" allowDecimals={false} />
             <YAxis type="category" dataKey="name" />
             <Tooltip />
             <Bar dataKey="wins" fill="#bada55" />
