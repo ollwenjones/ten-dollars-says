@@ -4,6 +4,7 @@ import {
   updatePartyBetPosition,
   updatePartyName
 } from "src/rest-api/Party";
+import SearchField from "./common/SearchField";
 import WrapInput from "./common/WrapInput";
 import "./PartyFields.css";
 
@@ -22,6 +23,11 @@ export default class PartyFields extends React.Component<
     this.props.onChange(this.props.index, updatedParty);
   };
 
+  onChosePartyName = (name: string) => {
+    const updatedParty = updatePartyName(name, this.props.party);
+    this.props.onChange(this.props.index, updatedParty);
+  };
+
   onBetPositionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedParty = updatePartyBetPosition(
       e.target.value,
@@ -37,14 +43,13 @@ export default class PartyFields extends React.Component<
   public render() {
     return (
       <div className="party-fields">
-        <WrapInput htmlFor={this.getNameId()} label="Name">
-          <input
-            id={this.props.index + "_name"}
-            className="party-fields__input"
-            placeholder="Name"
-            onChange={this.onNameChange}
-          />
-        </WrapInput>
+        <SearchField
+          label="Name"
+          onChoseValue={this.onChosePartyName}
+          inputClassName="party-fields__input"
+          placeholder="Name"
+          value={this.props.party.PartyName}
+        />
         <WrapInput htmlFor={this.getNameId()} label="Bets that">
           <input
             className="party-fields__input"

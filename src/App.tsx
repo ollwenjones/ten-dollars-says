@@ -11,7 +11,7 @@ interface AppState {
 }
 
 const defaultAppState: AppState = {
-  creatingBet: false,
+  creatingBet: true,
   isGoodSession: false,
   newBetName: ""
 };
@@ -59,6 +59,7 @@ export default App;
 # Still need to
 
 1. fetch contacts
+    1. is the email thing okay? Seems like username without the email would be _preferable_
 1. Judge bet checkbox bug!?!
 1. Data refresh on create/judge API calls
 1. Loader(s)
