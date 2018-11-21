@@ -1,0 +1,32 @@
+.tds-tabs {
+  display: flex;
+  flex-direction: column;
+}
+.tds-tabs__container {
+  display: flex;
+  flex-direction: row;
+  background: #343;
+  background: #5a6f5a;
+  height: 3rem;
+}
+.tds-tabs__tab {
+  flex: 1; /* let space be consumed by however many tabs */
+  min-width: 5rem;
+  height: 3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 3rem;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  display: block;
+}
+
+.tds-tabs__tab.selected {
+  background: white;
+  color: #232;
+}
+
+.tds-tabs__contents {
+  flex: 1;
+}

@@ -59,5 +59,9 @@ export default App;
 # Still need to
 
 1. fetch contacts
-1. create bet
+1. Judge bet checkbox bug!?!
+1. Data refresh on create/judge API calls
+1. Loader(s)
+1. Web sockets?
+1. tabbed table height CSS bug
 */

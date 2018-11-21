@@ -40,7 +40,7 @@ export const BetsApi = {
         })
     ),
   judgeBet: (judgeBet: JudgeBetPayload) => {
-    const url = getFlowIdUrl("33bea154-e9e0-11e8-b592-c49ded2c5c02");
+    const url = getFlowAliasUrl("tds/judge");
     return fetch(url, {
       body: JSON.stringify(judgeBet),
       method: "POST",

@@ -1,13 +1,22 @@
 /* .tds-bets {}
 */
 
+.tds-bets__list {
+  padding: 1rem;
+}
+
 .tds-bets__title {
   margin-bottom: 0.2rem;
+}
+.tds-bets__thead {
+  border-bottom: solid 2px #222;
+  font-weight: bold;
+  font-size: 1rem;
 }
 .tds-bets__table {
   width: 100%;
   border-collapse: collapse;
-  border-top: solid 2px #222;
+  overflow-y: auto;
 }
 
 .tds-bets__table__row:nth-child(even) {

@@ -22,7 +22,7 @@ export interface Party {
   ModifiedBy?: string;
   ModifiedDate: string;
   Outcome?: string;
-  PartyName?: string;
+  PartyName: string;
   Position?: string;
   State?: string;
 }
@@ -40,7 +40,8 @@ export function getBasePartyReqFields(): Party {
     Deleted: false,
     DeletedOn: new Date().toISOString(),
     Hidden: false,
-    ModifiedDate: new Date().toISOString()
+    ModifiedDate: new Date().toISOString(),
+    PartyName: ""
   };
 }
 
@@ -87,5 +88,5 @@ export function updatePartyName(name: string, party: Party) {
  * @returns new party object.
  */
 export function updatePartyBetPosition(betPosition: string, party: Party) {
-  return updateParty(party.PartyName || "", betPosition, party);
+  return updateParty(party.PartyName, betPosition, party);
 }
