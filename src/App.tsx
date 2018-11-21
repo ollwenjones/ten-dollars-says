@@ -64,4 +64,10 @@ export default App;
 1. Loader(s)
 1. Web sockets?
 1. tabbed table height CSS bug
+1. Make the wins highlights _pretty_
+1. Focus fields
+    1. Description on create bet
+    1. Party name when adding a party
+    1. Add a field
+1. X close to Modal(s)
 */
