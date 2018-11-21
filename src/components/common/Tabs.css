@@ -23,7 +23,7 @@
 }
 
 .tds-tabs__tab.selected {
-  background: white;
+  background: #fdfff5;
   color: #232;
 }
 
