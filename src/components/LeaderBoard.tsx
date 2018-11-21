@@ -48,10 +48,13 @@ export class LeaderBoard extends React.Component<{}, LeaderBoardState> {
 
   getData = () => {
     const winners = this.getWinsByName();
-    return Object.keys(winners).map(name => ({
-      name,
-      wins: winners[name]
-    }));
+    return Object.keys(winners)
+      .map(name => ({
+        name,
+        wins: winners[name]
+      }))
+      .sort((a, b) => b.wins - a.wins)
+      .slice(0, 5);
   };
 
   public render() {
