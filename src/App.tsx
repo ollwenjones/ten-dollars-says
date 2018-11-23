@@ -11,7 +11,7 @@ interface AppState {
 }
 
 const defaultAppState: AppState = {
-  creatingBet: true,
+  creatingBet: false,
   isGoodSession: false,
   newBetName: ""
 };
