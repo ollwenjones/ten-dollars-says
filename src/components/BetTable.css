@@ -23,8 +23,11 @@
   background: #ebf4ce;
 }
 
-.tds-bets__table__row > td {
+.tds-bets__table__row td {
   padding: 0.4rem;
+}
+.tds-bets__thead td {
+  padding: 0 0.4rem;
 }
 
 .tds-bets__table__deadline {
@@ -32,4 +35,19 @@
 }
 .tds-bets__table__judge {
   width: 12rem;
+}
+.tds-bets__table__expand {
+  width: 1rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.tds-bets__table__party-name {
+  font-weight: bold;
+}
+
+.tds-bets__table__row--sub {
+  background: rgba(0, 0, 0, 0.07);
 }

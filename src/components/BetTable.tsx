@@ -54,12 +54,13 @@ export default class BetTable
         <table className="tds-bets__table">
           <thead className="tds-bets__thead">
             <tr>
+              <td className="tds-bets__table__expand" />
               <td className="tds-bets__table__name">Name</td>
               <td className="tds-bets__table__deadline">Deadline</td>
               <td className="tds-bets__table__judge">Judge</td>
             </tr>
           </thead>
-          <tbody>{this.props.children({ bets: this.state.bets })}</tbody>
+          {this.props.children({ bets: this.state.bets })}
         </table>
       </section>
     );
