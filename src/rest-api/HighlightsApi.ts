@@ -33,7 +33,7 @@ function getWinnerInfoFromSummary(
 ): WinnerInfo {
   const summary = json.Done["Sorted Array"][0];
   return {
-    name: summary.PartyName,
+    name: summary.PartyName.split("@")[0], // if party name is an email, just include the name, for now
     score: selector(summary)
   };
 }

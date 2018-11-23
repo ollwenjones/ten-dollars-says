@@ -14,12 +14,13 @@
 .tds-wins-tile__title {
   margin-top: 0;
   position: relative;
-  /* z-index: 1; */
 }
 
 .tds-wins-tile__contents {
   position: relative;
-  /* z-index: 1; */
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  margin: 0.12rem;
 }
 
 .tds-wins-tile__icon {
