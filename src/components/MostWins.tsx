@@ -4,10 +4,12 @@ import {
   UpdateSubscriber,
   UpdateSubscriptions
 } from "src/rest-api/UpdateSubscriptions";
+import muscle from "../img/muscle.svg";
 import WinsTile from "./WinsTile";
 
 export interface MostWinsProps extends React.HTMLProps<{}> {
   title?: string;
+  icon?: string;
   fetchMethod?: () => Promise<WinnerInfo>;
 }
 
@@ -38,7 +40,10 @@ export default class MostWins
 
   public render() {
     return (
-      <WinsTile title={this.props.title || "Most Wins"}>
+      <WinsTile
+        title={this.props.title || "Most Wins"}
+        icon={this.props.icon || muscle}
+      >
         {this.state.who}
       </WinsTile>
     );

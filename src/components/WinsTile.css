@@ -1,12 +1,30 @@
 .tds-wins-tile {
   padding: 1rem;
   flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #ebf4ce;
 }
 
 .tds-wins-tile:nth-child(odd) {
   background: #ebf4ce;
+  background: #c8e07c;
 }
 
 .tds-wins-tile__title {
   margin-top: 0;
+  position: relative;
+  /* z-index: 1; */
+}
+
+.tds-wins-tile__contents {
+  position: relative;
+  /* z-index: 1; */
+}
+
+.tds-wins-tile__icon {
+  position: absolute;
+  opacity: 0.5;
+  height: 100%;
+  left: 50%;
 }
