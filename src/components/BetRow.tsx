@@ -3,11 +3,14 @@ import * as React from "react";
 import { AuthApi } from "src/rest-api/AuthApi";
 import {
   Bet,
+  getBetCompleted,
   getBetDeadline,
   getBetDescription,
   getBetJudge,
-  getBetName
+  getBetName,
+  getBetParties
 } from "src/rest-api/Bet";
+import { getWinningPartyNames } from "src/rest-api/Party";
 
 const DATE_FORMAT = "MM/DD/YY H:MM A";
 
@@ -37,6 +40,10 @@ export default class BetTableRow extends React.Component<
   };
 
   getJudgeCellContents = () => {
+    if (getBetCompleted(this.props.bet)) {
+      // want to show winners instead:
+      return getWinningPartyNames(getBetParties(this.props.bet)).join(", ");
+    }
     const judgeName = getBetJudge(this.props.bet);
     const currentUser = AuthApi.getSessionUserName();
     return this.props.onJudgeBet && judgeName === currentUser ? (

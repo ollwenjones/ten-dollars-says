@@ -24,6 +24,7 @@ export default class CompletedBets extends React.Component<
         apiMethod={BetsApi.fetchBetsCompleted}
         className="completed-bets"
         title="Completed Bets"
+        completedBets={true}
       >
         {({ bets }) => this.getRows(bets)}
       </BetTable>

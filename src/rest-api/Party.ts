@@ -1,3 +1,8 @@
+export const enum PartyBetOutcome {
+  WIN = "Win",
+  LOSS = "Loss"
+}
+
 /**
  * A "betting party" - track people's participation in the bets
  */
@@ -21,7 +26,8 @@ export interface Party {
   ID?: string;
   ModifiedBy?: string;
   ModifiedDate: string;
-  Outcome?: string;
+  /** Outcome is undefined if the bet is yet to be judged */
+  Outcome?: PartyBetOutcome;
   PartyName: string;
   Position?: string;
   State?: string;
@@ -89,4 +95,20 @@ export function updatePartyName(name: string, party: Party) {
  */
 export function updatePartyBetPosition(betPosition: string, party: Party) {
   return updateParty(party.PartyName, betPosition, party);
+}
+
+/**
+ * @param parties to check
+ * @return parties that won
+ */
+export function getWinningParties(parties: Party[]) {
+  return parties.filter(party => party.Outcome === PartyBetOutcome.WIN);
+}
+
+/**
+ * @param parties to check for win, and retrieve names
+ * @return names of parties that won.
+ */
+export function getWinningPartyNames(parties: Party[]) {
+  return getWinningParties(parties).map(party => party.PartyName);
 }

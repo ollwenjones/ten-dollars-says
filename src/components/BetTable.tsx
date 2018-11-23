@@ -10,6 +10,7 @@ import "./BetTable.css";
 export interface BetTableProps extends React.HTMLProps<{}> {
   apiMethod: () => Promise<Bet[]>;
   children: (props: BetTableRenderProps) => JSX.Element[];
+  completedBets?: boolean;
 }
 
 export interface BetTableRenderProps {
@@ -48,6 +49,9 @@ export default class BetTable
     UpdateSubscriptions.removeSubscriber(BetTable.name);
   }
 
+  getJudgeWinnerColumnTitle = () =>
+    this.props.completedBets ? "Winner(s)" : "Judge";
+
   public render() {
     return (
       <section className={classNames("tds-bets__list", this.props.className)}>
@@ -57,7 +61,9 @@ export default class BetTable
               <td className="tds-bets__table__expand" />
               <td className="tds-bets__table__name">Name</td>
               <td className="tds-bets__table__deadline">Deadline</td>
-              <td className="tds-bets__table__judge">Judge</td>
+              <td className="tds-bets__table__judge">
+                {this.getJudgeWinnerColumnTitle()}
+              </td>
             </tr>
           </thead>
           {this.props.children({ bets: this.state.bets })}
