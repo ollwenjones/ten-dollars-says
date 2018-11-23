@@ -19,8 +19,6 @@ export default class PartyCheckbox extends React.Component<
 
   public render() {
     const { party, checked } = this.props;
-    // tslint:disable-next-line:no-console
-    console.log(party.PartyName, checked);
     return (
       <div className="party-checkbox">
         <input

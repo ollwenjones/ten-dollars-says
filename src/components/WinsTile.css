@@ -28,3 +28,8 @@
   height: 100%;
   left: 50%;
 }
+
+.tds-wins-tile__score {
+  font-size: 2.5rem;
+  margin: 0;
+}
