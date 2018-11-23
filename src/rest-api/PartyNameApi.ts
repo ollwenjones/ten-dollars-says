@@ -6,8 +6,8 @@ interface PartyNameSearchResult {
   };
 }
 
-// very naive search.
-// needs 'debounce' and probably 'cancel'
+// very naive search. just hits REST API.
+// assumes any debounce/cancel are implemented elsewhere.
 export const PartyNameApi = {
   getPartyNames: (searchString: string): Promise<string[]> =>
     new Promise((resolve, reject) =>

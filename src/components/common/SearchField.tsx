@@ -1,3 +1,4 @@
+import { debounce } from "lodash";
 import * as React from "react";
 import * as AutoSuggest from "react-autosuggest";
 import {
@@ -28,6 +29,8 @@ const initialState: SearchFieldState = {
   value: ""
 };
 
+const SEARCH_DEBOUNCE_INTERVAL = 200; // milliseconds
+
 export default class SearchField extends React.Component<
   SearchFieldProps,
   SearchFieldState
@@ -35,10 +38,13 @@ export default class SearchField extends React.Component<
   state = { ...initialState };
 
   // it's terrible to have an API hard coded in here, but...POC, no time
-  onSuggestionsFetchRequested = ({ value }: SuggestionsFetchRequestedParams) =>
-    PartyNameApi.getPartyNames(value)
-      .then(suggestions => this.setState({ suggestions }))
-      .catch(() => this.setState({ suggestions: [] }));
+  onSuggestionsFetchRequested = debounce(
+    ({ value }: SuggestionsFetchRequestedParams) =>
+      PartyNameApi.getPartyNames(value)
+        .then(suggestions => this.setState({ suggestions }))
+        .catch(() => this.setState({ suggestions: [] })),
+    SEARCH_DEBOUNCE_INTERVAL
+  );
 
   onSuggestionsClearRequested = () => this.setState({ suggestions: [] });
 
