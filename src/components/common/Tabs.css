@@ -8,6 +8,7 @@
   background: #343;
   background: #5a6f5a;
   height: 3rem;
+  flex: none;
 }
 .tds-tabs__tab {
   flex: 1; /* let space be consumed by however many tabs */
@@ -29,4 +30,5 @@
 
 .tds-tabs__contents {
   flex: 1;
+  overflow-y: auto;
 }
