@@ -9,6 +9,7 @@ import {
 import { BetsApi } from "src/rest-api/BetsApi";
 import { JudgeBetPayload } from "src/rest-api/JudgeBet";
 import { Party } from "src/rest-api/Party";
+import { UpdateSubscriptions } from "src/rest-api/UpdateSubscriptions";
 import Modal from "./Modal";
 import PartyCheckbox from "./PartyCheckbox";
 
@@ -52,7 +53,10 @@ export default class JudgeBetForm extends React.Component<
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     BetsApi.judgeBet(this.getModel())
-      .then(this.props.onDone)
+      .then(() => {
+        UpdateSubscriptions.triggerUpdate();
+        this.props.onDone();
+      })
       .catch(this.props.onDone);
 
     // TODO loader during async action

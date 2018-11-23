@@ -8,6 +8,10 @@ import {
   YAxis
 } from "recharts";
 import { BetsApi } from "src/rest-api/BetsApi";
+import {
+  UpdateSubscriber,
+  UpdateSubscriptions
+} from "src/rest-api/UpdateSubscriptions";
 import "./LeaderBoard.css";
 
 export interface TdsParty {
@@ -22,13 +26,24 @@ export interface LeaderBoardState {
   winners: TdsParty[];
 }
 
-export class LeaderBoard extends React.Component<{}, LeaderBoardState> {
+export class LeaderBoard extends React.Component<{}, LeaderBoardState>
+  implements UpdateSubscriber {
   state: LeaderBoardState = { winners: [] };
 
-  componentDidMount() {
+  updateModel() {
     BetsApi.fetchPartyReport().then((report: any) =>
       this.setState({ winners: report })
     );
+  }
+
+  componentDidMount() {
+    // HOC for this boilerplate?
+    this.updateModel();
+    UpdateSubscriptions.addSubscriber(LeaderBoard.name, this);
+  }
+
+  componentWillUnmount() {
+    UpdateSubscriptions.removeSubscriber(LeaderBoard.name);
   }
 
   // Be good to make a report that was key:value or CSV instead of an array

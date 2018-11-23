@@ -1,6 +1,10 @@
 import * as classNames from "classnames";
 import * as React from "react";
 import { Bet } from "src/rest-api/Bet";
+import {
+  UpdateSubscriber,
+  UpdateSubscriptions
+} from "src/rest-api/UpdateSubscriptions";
 import "./BetTable.css";
 
 export interface BetTableProps extends React.HTMLProps<{}> {
@@ -25,16 +29,23 @@ const defaultState: BetTableState = {
  * For a bet "report" table, using
  * [render props](https://reactjs.org/docs/render-props.html)
  */
-export default class BetTable extends React.Component<
-  BetTableProps,
-  BetTableState
-> {
+export default class BetTable
+  extends React.Component<BetTableProps, BetTableState>
+  implements UpdateSubscriber {
   state = { ...defaultState };
 
-  componentDidMount() {
+  updateModel = () =>
     this.props.apiMethod().then(bets => {
       this.setState({ bets });
     });
+
+  componentDidMount() {
+    UpdateSubscriptions.addSubscriber(BetTable.name, this);
+    this.updateModel();
+  }
+
+  componentWillUnmount() {
+    UpdateSubscriptions.removeSubscriber(BetTable.name);
   }
 
   public render() {

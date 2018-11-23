@@ -11,6 +11,7 @@ import {
   getBasePartyReqFields,
   Party
 } from "src/rest-api/Party";
+import { UpdateSubscriptions } from "src/rest-api/UpdateSubscriptions";
 import BettingParties from "./BettingParties";
 import WrapInput from "./common/WrapInput";
 import "./CreateBetForm.css";
@@ -69,7 +70,10 @@ export default class CreateBetForm extends React.Component<
   onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     BetsApi.createBet(this.getModel())
-      .then(this.props.onDone)
+      .then(() => {
+        UpdateSubscriptions.triggerUpdate();
+        this.props.onDone();
+      })
       .catch(this.props.onDone);
 
     // TODO loader during async action
