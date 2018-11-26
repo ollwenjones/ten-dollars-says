@@ -41,12 +41,14 @@ class App extends React.Component<{}, AppState> {
           onBetNameChange={this.onBetNameChange}
         />
         <MainContents isGoodSession={this.state.isGoodSession} />
-        <CreateBetForm
-          betName={this.state.newBetName}
-          onBetNameChange={this.onBetNameChange}
-          show={this.state.creatingBet}
-          onDone={this.onCreateBetDone}
-        />
+        {this.state.creatingBet && (
+          <CreateBetForm
+            betName={this.state.newBetName}
+            onBetNameChange={this.onBetNameChange}
+            show={this.state.creatingBet}
+            onDone={this.onCreateBetDone}
+          />
+        )}
       </div>
     );
   }
