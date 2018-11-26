@@ -143,13 +143,6 @@ export default class CreateBetForm extends React.Component<
                 onChange={this.onDeadlineChange}
               />
             </WrapInput>
-            {/* <WrapInput htmlFor="judge" label="Judge" className="flex1">
-              <input
-                value={this.state.judge}
-                onChange={this.onJudgeChange}
-                className="create-bet-form__judge"
-              />
-            </WrapInput> */}
             <SearchField
               label="Judge"
               onChoseValue={this.onChoseJudge}
