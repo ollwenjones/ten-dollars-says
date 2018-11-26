@@ -71,7 +71,7 @@ export default class SearchField extends React.Component<
       id: this.props.id,
       onChange: this.onChange,
       placeholder: this.props.placeholder,
-      value
+      value: value || (this.props.value as string)
     };
 
     return (

@@ -14,6 +14,7 @@ import {
 import { UpdateSubscriptions } from "src/rest-api/UpdateSubscriptions";
 import BettingParties from "./BettingParties";
 import { Loader } from "./common/Loader";
+import SearchField from "./common/SearchField";
 import WrapInput from "./common/WrapInput";
 import "./CreateBetForm.css";
 import Modal from "./Modal";
@@ -60,6 +61,8 @@ export default class CreateBetForm extends React.Component<
 
   onJudgeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.setState({ judge: e.target.value });
+
+  onChoseJudge = (judge: string) => this.setState({ judge });
 
   onNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     this.setState({ notes: e.target.value });
@@ -140,13 +143,20 @@ export default class CreateBetForm extends React.Component<
                 onChange={this.onDeadlineChange}
               />
             </WrapInput>
-            <WrapInput htmlFor="judge" label="Judge" className="flex1">
+            {/* <WrapInput htmlFor="judge" label="Judge" className="flex1">
               <input
                 value={this.state.judge}
                 onChange={this.onJudgeChange}
                 className="create-bet-form__judge"
               />
-            </WrapInput>
+            </WrapInput> */}
+            <SearchField
+              label="Judge"
+              onChoseValue={this.onChoseJudge}
+              inputClassName="create-bet-form__judge"
+              placeholder="Judge"
+              value={this.state.judge}
+            />
           </div>
           <BettingParties
             parties={this.state.parties}
