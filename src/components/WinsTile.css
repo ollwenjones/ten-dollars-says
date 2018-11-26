@@ -3,11 +3,10 @@
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: #ebf4ce;
+  background: #d9e8a6;
 }
 
 .tds-wins-tile:nth-child(odd) {
-  background: #ebf4ce;
   background: #c8e07c;
 }
 
