@@ -27,10 +27,12 @@ export default class Bets extends React.Component<BetsProps, any> {
           <OpenBets onJudgeBet={this.onJudgeBet} />
           <CompletedBets />
         </Tabs>
-        <JudgeBetForm
-          bet={this.state.judgingBet}
-          onDone={this.onDoneJudgingBet}
-        />
+        {this.state.judgingBet && (
+          <JudgeBetForm
+            bet={this.state.judgingBet}
+            onDone={this.onDoneJudgingBet}
+          />
+        )}
       </div>
     );
   }
