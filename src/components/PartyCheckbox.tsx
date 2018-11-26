@@ -12,10 +12,9 @@ export default class PartyCheckbox extends React.Component<
   PartyCheckboxProps,
   any
 > {
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  // not an SFC, because "this" is state we need to reference in this handler
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.props.onChange(this.props.party, !this.props.checked);
-  };
 
   public render() {
     const { party, checked } = this.props;
