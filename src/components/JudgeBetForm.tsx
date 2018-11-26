@@ -10,6 +10,7 @@ import { BetsApi } from "src/rest-api/BetsApi";
 import { JudgeBetPayload } from "src/rest-api/JudgeBet";
 import { Party } from "src/rest-api/Party";
 import { UpdateSubscriptions } from "src/rest-api/UpdateSubscriptions";
+import { Loader } from "./common/Loader";
 import Modal from "./Modal";
 import PartyCheckbox from "./PartyCheckbox";
 
@@ -19,9 +20,11 @@ export interface JudgeBetFormProps {
 }
 export interface JudgeBetFormState {
   winners: Map<string, boolean>;
+  busy: boolean;
 }
 
 const defaultState: JudgeBetFormState = {
+  busy: false,
   winners: new Map()
 };
 
@@ -51,13 +54,18 @@ export default class JudgeBetForm extends React.Component<
   };
 
   onSubmit = (e: React.FormEvent) => {
+    this.setState({ busy: true });
     e.preventDefault();
     BetsApi.judgeBet(this.getModel())
       .then(() => {
+        this.setState({ busy: false });
         UpdateSubscriptions.triggerUpdate();
         this.props.onDone();
       })
-      .catch(this.props.onDone);
+      .catch(() => {
+        this.setState({ busy: false });
+        this.props.onDone();
+      });
 
     // TODO loader during async action
   };
@@ -100,6 +108,7 @@ export default class JudgeBetForm extends React.Component<
             <button type="submit">Declare Winner(s)</button>
           </div>
         </form>
+        <Loader busy={this.state.busy} />
       </Modal>
     ) : null;
   }

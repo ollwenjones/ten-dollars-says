@@ -6,6 +6,7 @@ import {
   UpdateSubscriptions
 } from "src/rest-api/UpdateSubscriptions";
 import "./BetTable.css";
+import { Loader } from "./common/Loader";
 
 export interface BetTableProps extends React.HTMLProps<{}> {
   apiMethod: () => Promise<Bet[]>;
@@ -19,10 +20,12 @@ export interface BetTableRenderProps {
 
 export interface BetTableState {
   bets: Bet[];
+  busy: boolean;
 }
 
 const defaultState: BetTableState = {
-  bets: []
+  bets: [],
+  busy: false
 };
 
 /**
@@ -35,10 +38,12 @@ export default class BetTable
   implements UpdateSubscriber {
   state = { ...defaultState };
 
-  updateModel = () =>
+  updateModel = () => {
+    this.setState({ busy: true });
     this.props.apiMethod().then(bets => {
-      this.setState({ bets });
+      this.setState({ bets, busy: false });
     });
+  };
 
   componentDidMount() {
     UpdateSubscriptions.addSubscriber(BetTable.name, this);
@@ -68,6 +73,7 @@ export default class BetTable
           </thead>
           {this.props.children({ bets: this.state.bets })}
         </table>
+        <Loader busy={this.state.busy} />
       </section>
     );
   }

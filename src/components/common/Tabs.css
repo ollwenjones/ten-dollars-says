@@ -1,6 +1,7 @@
 .tds-tabs {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .tds-tabs__container {
   display: flex;
@@ -31,4 +32,6 @@
 .tds-tabs__contents {
   flex: 1;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }

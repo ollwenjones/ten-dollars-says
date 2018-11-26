@@ -13,6 +13,7 @@ import {
 } from "src/rest-api/Party";
 import { UpdateSubscriptions } from "src/rest-api/UpdateSubscriptions";
 import BettingParties from "./BettingParties";
+import { Loader } from "./common/Loader";
 import WrapInput from "./common/WrapInput";
 import "./CreateBetForm.css";
 import Modal from "./Modal";
@@ -26,6 +27,7 @@ export interface CreateBetFormProps {
 }
 
 export interface CreateBetFormState {
+  busy: boolean;
   description: string;
   parties: Party[];
   judge: string;
@@ -35,6 +37,7 @@ export interface CreateBetFormState {
 }
 
 const defaultState: CreateBetFormState = {
+  busy: false,
   deadline: new Date(),
   description: "",
   judge: "",
@@ -68,15 +71,18 @@ export default class CreateBetForm extends React.Component<
     makeCreatingBetObject(this.props.betName, this.state);
 
   onSubmit = (e: React.FormEvent) => {
+    this.setState({ busy: true });
     e.preventDefault();
     BetsApi.createBet(this.getModel())
       .then(() => {
         UpdateSubscriptions.triggerUpdate();
+        this.setState({ busy: false });
         this.props.onDone();
       })
-      .catch(this.props.onDone);
-
-    // TODO loader during async action
+      .catch(() => {
+        this.setState({ busy: false });
+        this.props.onDone();
+      });
   };
 
   onPartyUpdate = (index: number, party: Party) => {
@@ -161,6 +167,7 @@ export default class CreateBetForm extends React.Component<
             <button type="submit">Throw down!</button>
           </div>
         </form>
+        <Loader busy={this.state.busy} />
       </Modal>
     );
   }

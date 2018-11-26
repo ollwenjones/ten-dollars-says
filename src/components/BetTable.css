@@ -3,6 +3,7 @@
 
 .tds-bets__list {
   padding: 1rem;
+  position: relative;
 }
 
 .tds-bets__title {
