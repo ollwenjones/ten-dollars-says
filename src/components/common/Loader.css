@@ -1,0 +1,59 @@
+@keyframes spin-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.tds-loader {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+}
+
+.tds-loader__spinner {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+
+.tds-loader__spinner__outer,
+.tds-loader__spinner__inner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.tds-loader__spinner .tds-loader__spinner__outer {
+  animation: spin-rotate 1s 0s infinite linear;
+}
+.tds-loader__spinner .tds-loader__spinner__inner {
+  animation: spin-rotate 2s 0s infinite linear;
+}
+
+.tds-loader__spinner--simple {
+  width: 3rem;
+  height: 3rem;
+}
+.tds-loader__spinner--simple .tds-loader__spinner__outer,
+.tds-loader__spinner--simple .tds-loader__spinner__inner {
+  border: solid 4px rgba(0, 0, 0, 0.4);
+  border-color: #bada55;
+  border-radius: 100%;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 100%;
+}
