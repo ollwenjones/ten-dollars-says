@@ -37,6 +37,12 @@ body,
   color: #5d6e5d;
   box-shadow: none;
 }
+
+.App button:disabled,
+.modal__contents button:disabled {
+  opacity: 0.6;
+}
+
 /* try to make it look like a stack of dollars, but this isn't the way */
 /* .App button::before,
 .modal__contents button::before {
