@@ -1,4 +1,5 @@
 import * as Cookies from "js-cookie";
+import { ApiConfig } from "./ApiConfig";
 
 interface ILoginJson {
   LoginUserResult: ILoginUserResult;
@@ -33,7 +34,7 @@ export const AuthApi = {
    */
   login: (userid: string, password: string) =>
     new Promise<string>((resolve, reject) =>
-      fetch(`/Primary/REST/AccountService/LoginUser`, {
+      fetch(`${ApiConfig.restRoot}/REST/AccountService/LoginUser`, {
         body: JSON.stringify({ userid, password, outputType: "JSON" }),
         method: "POST",
         mode: "cors"

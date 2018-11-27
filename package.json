@@ -33,5 +33,6 @@
     "@types/recharts": "^1.1.1",
     "typescript": "^3.1.6"
   },
-  "proxy": "http://localhost/decisions"
+  "proxy": "http://localhost",
+  "homepage": "./"
 }

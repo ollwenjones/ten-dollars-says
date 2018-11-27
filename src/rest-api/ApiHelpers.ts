@@ -1,4 +1,4 @@
-import { DECISIONS_ROOT } from "./ApiConfig";
+import { ApiConfig } from "./ApiConfig";
 import { AuthApi } from "./AuthApi";
 
 export function getReportUrl(reportId: string) {
@@ -29,7 +29,9 @@ export function getUrlWithSessionId(
   id: string
 ) {
   const sessionId = AuthApi.getSessionId(); // TODO escape?
-  return `${DECISIONS_ROOT}?${type}=${id}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
+  return `${
+    ApiConfig.restRoot
+  }?${type}=${id}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
 }
 
 type ResolvingCallback<T> = (json: T) => void;
