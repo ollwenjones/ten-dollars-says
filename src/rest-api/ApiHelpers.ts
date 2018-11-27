@@ -31,3 +31,32 @@ export function getUrlWithSessionId(
   const sessionId = AuthApi.getSessionId(); // TODO escape?
   return `${DECISIONS_ROOT}?${type}=${id}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
 }
+
+type ResolvingCallback<T> = (json: T) => void;
+
+type Reject = (reason?: any) => void;
+
+const JSON = "application/json";
+
+/**
+ * Handle edge cases where odd behavior from the Decisions (5.x) back-end and the
+ * odd behaviors of the TypeScript fetch API collide. Namely, 500s and 403s are still
+ * getting passed to the `.then` block of the fetch promise, and the response from
+ * the decisions back-end for those error codes is a non-JSON string.
+ *
+ * @param resolvingCallback callback to parse data out and resolve the promise as
+ *        the use-case demands
+ * @param reject promise reject callback to reject due to API errors.
+ */
+export function getResponseJson<T>(
+  response: Response,
+  resolvingCallback: ResolvingCallback<T>,
+  reject: Reject
+) {
+  const contentType = response.headers.get("content-type");
+  if (contentType && contentType.indexOf(JSON) !== -1) {
+    response.json().then(resolvingCallback);
+  } else {
+    reject(response);
+  }
+}

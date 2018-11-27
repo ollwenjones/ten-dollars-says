@@ -1,4 +1,9 @@
-import { getFlowAliasUrl, getFlowIdUrl, getReportUrl } from "./ApiHelpers";
+import {
+  getFlowAliasUrl,
+  getFlowIdUrl,
+  getReportUrl,
+  getResponseJson
+} from "./ApiHelpers";
 import { Bet } from "./Bet";
 import { CreatingBetPayload } from "./CreatingBet";
 import { JudgeBetPayload } from "./JudgeBet";
@@ -28,12 +33,8 @@ export const BetsApi = {
   fetchPartyReport: () =>
     new Promise<any[]>((resolve, reject) =>
       fetch(getReportUrl(PARTY_REPORT), { mode: "cors" })
-        .then(
-          response =>
-            response.json && // 403s still trigger fetch.then!!1?
-            response.json().then((json: any) => {
-              resolve(json.Rows);
-            })
+        .then(response =>
+          getResponseJson(response, (json: any) => resolve(json.Rows), reject)
         )
         .catch(reason => {
           reject(reason);
@@ -57,12 +58,12 @@ function getWrappedBetFetch(completed: boolean) {
     return fetch(url, {
       mode: "cors"
     })
-      .then(
-        response =>
-          response.json && // 403s still trigger fetch.then!!1?
-          response.json().then((json: BetResult) => {
-            resolve(json.result.bets);
-          })
+      .then(response =>
+        getResponseJson(
+          response,
+          (json: BetResult) => resolve(json.result.bets),
+          reject
+        )
       )
       .catch(reason => {
         reject(reason);

@@ -1,4 +1,4 @@
-import { getFlowAliasUrl } from "./ApiHelpers";
+import { getFlowAliasUrl, getResponseJson } from "./ApiHelpers";
 
 export const HighlightsApi = {
   fetchHighestPercent: () =>
@@ -46,12 +46,13 @@ function getWinnerInfoFromSummary(
 function makeWrappedTileFetch(flowAlias: string, selector: ScoreSelector) {
   return new Promise<WinnerInfo>((resolve, reject) =>
     fetch(getFlowAliasUrl(flowAlias))
-      .then(
-        response =>
-          response.json && // 403s still trigger fetch.then!!1?
-          response.json().then((json: DoneSortedArray) => {
-            resolve(getWinnerInfoFromSummary(json, selector));
-          })
+      .then(response =>
+        getResponseJson(
+          response,
+          (json: DoneSortedArray) =>
+            resolve(getWinnerInfoFromSummary(json, selector)),
+          reject
+        )
       )
       .catch(reason => {
         reject(reason);

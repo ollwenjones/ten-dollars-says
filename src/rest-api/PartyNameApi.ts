@@ -1,4 +1,4 @@
-import { getFlowAliasUrl } from "./ApiHelpers";
+import { getFlowAliasUrl, getResponseJson } from "./ApiHelpers";
 
 interface PartyNameSearchResult {
   result: {
@@ -12,11 +12,14 @@ export const PartyNameApi = {
   getPartyNames: (searchString: string): Promise<string[]> =>
     new Promise((resolve, reject) =>
       fetch(getPartySearchUrl(searchString))
-        .then(response => {
-          response.json().then(({ result }: PartyNameSearchResult) => {
-            resolve(result.parties || []);
-          });
-        })
+        .then(response =>
+          getResponseJson(
+            response,
+            ({ result }: PartyNameSearchResult) =>
+              resolve(result.parties || []),
+            reject
+          )
+        )
         .catch(reason => reject(reason))
     )
 };

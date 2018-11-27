@@ -40,9 +40,12 @@ export default class BetTable
 
   updateModel = () => {
     this.setState({ busy: true });
-    this.props.apiMethod().then(bets => {
-      this.setState({ bets, busy: false });
-    });
+    this.props
+      .apiMethod()
+      .then(bets => {
+        this.setState({ bets, busy: false });
+      })
+      .catch(() => this.setState({ busy: false }));
   };
 
   componentDidMount() {
