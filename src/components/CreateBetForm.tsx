@@ -88,6 +88,8 @@ export default class CreateBetForm extends React.Component<
       });
   };
 
+  focusDescription = (element: HTMLInputElement) => element && element.focus();
+
   onPartyUpdate = (index: number, party: Party) => {
     const parties = [...this.state.parties];
     parties[index] = party;
@@ -126,9 +128,11 @@ export default class CreateBetForm extends React.Component<
             <input
               className="create-bet-form__description"
               id="desc"
+              key="desc"
               type="text"
               value={this.state.description}
               onChange={this.onDescriptionChange}
+              ref={this.focusDescription}
             />
           </WrapInput>
           <div className="create-bet-form__row">
