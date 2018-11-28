@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [Goals](#goals)
 - [Process](#process)
 - [Results](#results)
+- [API Documentation](./DECISIONS_API_DOCUMENTATION.md)
 
 ## Goals
 
