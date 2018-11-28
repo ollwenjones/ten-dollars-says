@@ -8,6 +8,7 @@
 .tds-header__logo {
   animation: Logo-zoom 0.5s ease-in;
   height: 2.7rem;
+  z-index: 1;
 }
 
 .tds-header__title {
