@@ -1,12 +1,19 @@
 const DEFAULT_ROOT = "../decisions/Primary/";
 
 export const ApiConfig = {
+  cors: true,
+  getFetchMode(): RequestMode {
+    return this.cors ? "cors" : "same-origin";
+  },
   loadConfig() {
     fetch(`./rest-config.json`)
       .then(value =>
         value
           .json()
-          .then(json => (this.restRoot = json.restRoot))
+          .then(json => {
+            this.restRoot = json.restRoot;
+            this.cors = json.cors;
+          })
           .catch(logRootConfigLoadError)
       )
       .catch(logRootConfigLoadError);

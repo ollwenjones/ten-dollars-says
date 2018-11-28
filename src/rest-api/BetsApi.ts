@@ -1,9 +1,5 @@
-import {
-  getFlowAliasUrl,
-  getFlowIdUrl,
-  getReportUrl,
-  getResponseJson
-} from "./ApiHelpers";
+import { ApiConfig } from "./ApiConfig";
+import { getFlowAliasUrl, getReportUrl, getResponseJson } from "./ApiHelpers";
 import { Bet } from "./Bet";
 import { CreatingBetPayload } from "./CreatingBet";
 import { JudgeBetPayload } from "./JudgeBet";
@@ -21,18 +17,18 @@ const PARTY_REPORT = "56ccdda8-bda2-11e8-a989-81c1bba3abd0";
 
 export const BetsApi = {
   createBet: (newBet: CreatingBetPayload) => {
-    const url = getFlowIdUrl("f5aef800-b2c8-11e8-a987-c4660be71084");
+    const url = getFlowAliasUrl("tds/bets/create");
     return fetch(url, {
       body: JSON.stringify(newBet),
       method: "POST",
-      mode: "cors"
+      mode: ApiConfig.getFetchMode()
     });
   },
   fetchBetsCompleted: () => getWrappedBetFetch(true),
   fetchBetsOpen: () => getWrappedBetFetch(false),
   fetchPartyReport: () =>
     new Promise<any[]>((resolve, reject) =>
-      fetch(getReportUrl(PARTY_REPORT), { mode: "cors" })
+      fetch(getReportUrl(PARTY_REPORT), { mode: ApiConfig.getFetchMode() })
         .then(response =>
           getResponseJson(response, (json: any) => resolve(json.Rows), reject)
         )
@@ -45,7 +41,7 @@ export const BetsApi = {
     return fetch(url, {
       body: JSON.stringify(judgeBet),
       method: "POST",
-      mode: "cors"
+      mode: ApiConfig.getFetchMode()
     });
   }
 };
@@ -56,7 +52,7 @@ function getWrappedBetFetch(completed: boolean) {
   return new Promise<Bet[]>((resolve, reject) => {
     const url = getFlowAliasUrl(BET_ALIAS) + `&completed=${completed}`;
     return fetch(url, {
-      mode: "cors"
+      mode: ApiConfig.getFetchMode()
     })
       .then(response =>
         getResponseJson(

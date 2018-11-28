@@ -37,7 +37,7 @@ export const AuthApi = {
       fetch(`${ApiConfig.restRoot}/REST/AccountService/LoginUser`, {
         body: JSON.stringify({ userid, password, outputType: "JSON" }),
         method: "POST",
-        mode: "cors"
+        mode: ApiConfig.getFetchMode()
       })
         .then(response =>
           response.json().then((json: ILoginJson) => {
