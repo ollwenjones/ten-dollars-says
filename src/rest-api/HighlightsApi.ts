@@ -24,7 +24,7 @@ function getScore(summary: ScoreSummary) {
 }
 
 function getPercent(summary: ScoreSummary) {
-  return "%" + Math.round(summary.WinPercent * 100);
+  return Math.round(summary.WinPercent * 100) + "%";
 }
 
 function getWinnerInfoFromSummary(
