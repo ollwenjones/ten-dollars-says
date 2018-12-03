@@ -13,6 +13,7 @@ export interface SearchFieldProps extends React.HTMLProps<{}> {
   onChoseValue: (value: string) => void;
   inputClassName?: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export interface SearchFieldState {
@@ -78,6 +79,7 @@ export default class SearchField extends React.Component<
       <WrapInput
         htmlFor={this.props.id || "search"}
         label={this.props.label || "Search"}
+        required={this.props.required}
       >
         <AutoSuggest
           suggestions={suggestions}

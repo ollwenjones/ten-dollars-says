@@ -48,9 +48,10 @@ export default class PartyFields extends React.Component<
           onChoseValue={this.onChosePartyName}
           inputClassName="party-fields__input"
           placeholder="Name"
+          required={true}
           value={this.props.party.PartyName}
         />
-        <WrapInput htmlFor={this.getNameId()} label="Bets that">
+        <WrapInput htmlFor={this.getNameId()} label="Bets that" required={true}>
           <input
             className="party-fields__input"
             placeholder="Bets that"

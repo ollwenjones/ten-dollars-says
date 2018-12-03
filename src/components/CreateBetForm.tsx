@@ -102,6 +102,19 @@ export default class CreateBetForm extends React.Component<
     this.setState({ parties });
   };
 
+  disableSubmitButton = () => {
+    const emptyParty = !!this.state.parties.filter(
+      party => !party.PartyName || !party.Position
+    ).length;
+
+    return (
+      !this.props.betName ||
+      emptyParty ||
+      !this.state.deadline ||
+      !this.state.judge
+    );
+  };
+
   componentDidMount() {
     this.setState({
       deadline: addWeeks(new Date(), 1),
@@ -140,6 +153,7 @@ export default class CreateBetForm extends React.Component<
               htmlFor="deadline"
               label="Deadline"
               className="gutter-right"
+              required={true}
             >
               <input
                 type="date"
@@ -152,6 +166,7 @@ export default class CreateBetForm extends React.Component<
               onChoseValue={this.onChoseJudge}
               inputClassName="create-bet-form__judge"
               placeholder="Judge"
+              required={true}
               value={this.state.judge}
             />
           </div>
@@ -171,7 +186,9 @@ export default class CreateBetForm extends React.Component<
             <button className="inverse" onClick={this.props.onDone}>
               Cancel
             </button>
-            <button type="submit">Throw down!</button>
+            <button type="submit" disabled={this.disableSubmitButton()}>
+              Throw down!
+            </button>
           </div>
         </form>
         <Loader busy={this.state.busy} />
