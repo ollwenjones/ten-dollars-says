@@ -31,7 +31,14 @@ function getWinnerInfoFromSummary(
   json: DoneSortedArray,
   selector: ScoreSelector
 ): WinnerInfo {
-  const summary = json.Done["Sorted Array"][0];
+  const summaries = json.Done["Sorted Array"];
+  if (!summaries) {
+    return {
+      name: "Nobody?",
+      score: "None."
+    };
+  }
+  const summary = summaries[0];
   return {
     name: summary.PartyName.split("@")[0], // if party name is an email, just include the name, for now
     score: selector(summary)

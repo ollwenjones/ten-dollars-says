@@ -15,14 +15,18 @@ export default class OpenBets extends React.Component<
   OpenBetsProps,
   OpenBetsState
 > {
-  getRows = (bets: Bet[]) =>
-    bets.map(bet => (
+  getRows = (bets: Bet[]) => {
+    if (!Array.isArray(bets)) {
+      return [];
+    }
+    return bets.map(bet => (
       <BetTableRow
         key={getBetId(bet)}
         bet={bet}
         onJudgeBet={this.props.onJudgeBet}
       />
     ));
+  };
 
   public render() {
     return (

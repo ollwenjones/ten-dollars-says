@@ -15,8 +15,12 @@ export default class CompletedBets extends React.Component<
   CompletedBetsProps,
   CompletedBetsState
 > {
-  getRows = (bets: Bet[]) =>
-    bets.map(bet => <BetTableRow key={getBetId(bet)} bet={bet} />);
+  getRows = (bets: Bet[]) => {
+    if (!Array.isArray(bets)) {
+      return [];
+    }
+    return bets.map(bet => <BetTableRow key={getBetId(bet)} bet={bet} />);
+  };
 
   public render() {
     return (
