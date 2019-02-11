@@ -1,18 +1,23 @@
 import { ApiConfig } from "./ApiConfig";
-import { getFlowAliasUrl, getReportUrl, getResponseJson } from "./ApiHelpers";
+import {
+  getFlowAliasUrl,
+  getReportUrl,
+  getResponseJson,
+  getServiceEndPointUrl
+} from "./ApiHelpers";
 import { Bet } from "./Bet";
 import { CreatingBetPayload } from "./CreatingBet";
 import { JudgeBetPayload } from "./JudgeBet";
 
 export interface BetResult {
-  result: {
+  GetBetsResult: {
     bets: Bet[];
   };
 }
 
 // is there a way to make these more friendly?
 // are they portable? (I'm guessing they are unique per decisions instance)
-const BET_ALIAS = "tds/bets";
+const BET_ALIAS = "TdsBetsService/GetBets";
 const PARTY_REPORT = "56ccdda8-bda2-11e8-a989-81c1bba3abd0";
 
 export const BetsApi = {
@@ -50,14 +55,16 @@ export const BetsApi = {
 
 function getWrappedBetFetch(completed: boolean) {
   return new Promise<Bet[]>((resolve, reject) => {
-    const url = getFlowAliasUrl(BET_ALIAS) + `&completed=${completed}`;
+    const url = getServiceEndPointUrl(BET_ALIAS) + `&completed=${completed}`;
     return fetch(url, {
       mode: ApiConfig.getFetchMode()
     })
       .then(response =>
         getResponseJson(
           response,
-          (json: BetResult) => resolve(json.result.bets),
+          (json: BetResult) => {
+            return resolve(json.GetBetsResult.bets);
+          },
           reject
         )
       )
