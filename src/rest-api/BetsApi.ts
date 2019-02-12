@@ -1,6 +1,5 @@
 import { ApiConfig } from "./ApiConfig";
 import {
-  getFlowAliasUrl,
   getReportUrl,
   getResponseJson,
   getServiceEndPointUrl
@@ -15,14 +14,15 @@ export interface BetResult {
   };
 }
 
-// is there a way to make these more friendly?
-// are they portable? (I'm guessing they are unique per decisions instance)
-const BET_ALIAS = "TdsBetsService/GetBets";
+const BET_SERVICE = "TdsBetsService";
+const BET_ALIAS = `${BET_SERVICE}/GetBets`;
+const CREATE_BET = `${BET_SERVICE}/CreateBet`;
+const JUDGE_BET = `${BET_SERVICE}/JudgeBet`;
 const PARTY_REPORT = "56ccdda8-bda2-11e8-a989-81c1bba3abd0";
 
 export const BetsApi = {
   createBet: (newBet: CreatingBetPayload) => {
-    const url = getFlowAliasUrl("tds/bets/create");
+    const url = getServiceEndPointUrl(CREATE_BET);
     return fetch(url, {
       body: JSON.stringify(newBet),
       method: "POST",
@@ -42,7 +42,7 @@ export const BetsApi = {
         })
     ),
   judgeBet: (judgeBet: JudgeBetPayload) => {
-    const url = getFlowAliasUrl("tds/judge");
+    const url = getServiceEndPointUrl(JUDGE_BET);
     return fetch(url, {
       body: JSON.stringify(judgeBet),
       method: "POST",

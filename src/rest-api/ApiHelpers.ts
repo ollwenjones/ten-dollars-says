@@ -23,7 +23,7 @@ export function getServiceEndPointUrl(path: string) {
   const sessionId = AuthApi.getSessionId();
   return `${
     ApiConfig.restRoot
-  }REST/${path}?Action=api&outputtype=JSON&sessionId=${sessionId}`;
+  }REST/${path}?outputtype=JSON&sessionId=${sessionId}`;
 }
 
 /**

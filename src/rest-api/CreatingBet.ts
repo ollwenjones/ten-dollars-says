@@ -13,7 +13,7 @@ export interface CreatingBet {
 /** POST payload expected */
 export interface CreatingBetPayload {
   outputtype: "Json";
-  "Bet Name": string; // bleeerg
+  BetName: string;
   /** Date ISO string */
   Deadline: string;
   Judge: string;
@@ -28,7 +28,7 @@ export function makeCreatingBetObject(
   { deadline, description, parties, judge, notes }: CreateBetFormState
 ): CreatingBetPayload {
   return {
-    "Bet Name": name,
+    BetName: name,
     Deadline: deadline.toISOString(),
     outputtype: "Json",
     // tslint:disable-next-line:object-literal-sort-keys // because it's wrong!!

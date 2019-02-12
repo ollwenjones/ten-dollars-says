@@ -7,4 +7,8 @@ export interface JudgeBetPayload {
    * GUID of bet being judged.
    */
   betId: string;
+  /**
+   * Content type - almost always 'Json'
+   */
+  outputtype: "Json";
 }

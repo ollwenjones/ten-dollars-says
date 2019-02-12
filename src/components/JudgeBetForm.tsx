@@ -38,6 +38,7 @@ export default class JudgeBetForm extends React.Component<
     if (!this.props.bet) {
       return {
         betId: "",
+        outputtype: "Json",
         selectedWinners: []
       };
     }
@@ -49,6 +50,7 @@ export default class JudgeBetForm extends React.Component<
     });
     return {
       betId: getBetId(this.props.bet),
+      outputtype: "Json",
       selectedWinners
     };
   };
