@@ -5,6 +5,7 @@ export const ApiConfig = {
   getFetchMode(): RequestMode {
     return this.cors ? "cors" : "same-origin";
   },
+  isLoaded: false,
   loadConfig() {
     fetch(`./rest-config.json`)
       .then(value =>
@@ -13,6 +14,7 @@ export const ApiConfig = {
           .then(json => {
             this.restRoot = json.restRoot;
             this.cors = json.cors;
+            this.isLoaded = true;
           })
           .catch(logRootConfigLoadError)
       )

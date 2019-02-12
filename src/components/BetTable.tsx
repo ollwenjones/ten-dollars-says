@@ -1,5 +1,6 @@
 import * as classNames from "classnames";
 import * as React from "react";
+import { ApiConfig } from "src/rest-api/ApiConfig";
 import { Bet } from "src/rest-api/Bet";
 import {
   UpdateSubscriber,
@@ -40,6 +41,15 @@ export default class BetTable
 
   updateModel = () => {
     this.setState({ busy: true });
+
+    if (!ApiConfig.isLoaded) {
+      setTimeout(() => {
+        // wait for config to load, inelegant, but #POC.
+        this.updateModel();
+      }, 50);
+      return;
+    }
+
     this.props
       .apiMethod()
       .then(bets => {
