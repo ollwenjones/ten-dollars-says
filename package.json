@@ -33,6 +33,6 @@
     "@types/recharts": "^1.1.1",
     "typescript": "^3.1.6"
   },
-  "proxy": "http://localhost",
-  "homepage": "./"
+  "proxy": "http://172.18.98.179",
+  "homepage": "https://tirade.decisions.com/decisions/tds"
 }
