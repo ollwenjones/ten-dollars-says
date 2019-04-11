@@ -1,27 +1,10 @@
-import { getFlowAliasUrl, getResponseJson } from "./ApiHelpers";
-
-interface PartyNameSearchResult {
-  result: {
-    parties: string[];
-  };
-}
+import { getFlowAliasUrl, getWrappedFetch } from "./ApiHelpers";
 
 // very naive search. just hits REST API.
 // assumes any debounce/cancel are implemented elsewhere.
 export const PartyNameApi = {
   getPartyNames: (searchString: string): Promise<string[]> =>
-    new Promise((resolve, reject) =>
-      fetch(getPartySearchUrl(searchString))
-        .then(response =>
-          getResponseJson(
-            response,
-            ({ result }: PartyNameSearchResult) =>
-              resolve(result.parties || []),
-            reject
-          )
-        )
-        .catch(reason => reject(reason))
-    )
+    getWrappedFetch(getPartySearchUrl(searchString), "parties")
 };
 
 function getPartySearchUrl(searchString: string) {

@@ -2,11 +2,15 @@ import { ApiConfig } from "./ApiConfig";
 import { AuthApi } from "./AuthApi";
 
 export function getReportUrl(reportId: string) {
-  return getUrlWithSessionId("ReportId", reportId);
+  return getUrlWithSessionId("ReportId", reportId, "Json");
 }
 
 export function getFlowIdUrl(flowId: string) {
   return getUrlWithSessionId("FlowId", flowId);
+}
+
+export function getRuleIdUrl(ruleId: string) {
+  return getUrlWithSessionId("RuleId", ruleId, "Json");
 }
 
 /**
@@ -33,20 +37,19 @@ export function getServiceEndPointUrl(path: string) {
  * @return url with sessionId query parameter appended.
  */
 export function getUrlWithSessionId(
-  type: "ReportId" | "FlowId" | "FlowAlias",
-  id: string
+  type: "ReportId" | "FlowId" | "FlowAlias" | "RuleId",
+  id: string,
+  output: "Json" | "RawJson" = "RawJson"
 ) {
   const sessionId = AuthApi.getSessionId(); // TODO escape?
   return `${
     ApiConfig.restRoot
-  }?${type}=${id}&Action=api&outputtype=JSON&sessionId=${sessionId}`;
+  }?${type}=${id}&Action=api&outputtype=${output}&sessionId=${sessionId}`;
 }
 
 type ResolvingCallback<T> = (json: T) => void;
 
 type Reject = (reason?: any) => void;
-
-const JSON = "JSON";
 
 /**
  * Handle edge cases where odd behavior from the Decisions (5.x) back-end and the
@@ -71,6 +74,74 @@ export function getResponseJson<T>(
   }
 }
 
+/**
+ * Convenience function to have 'null' query params for empty strings.
+ *
+ * Some end-points don't handle empty-string query params.
+ * Most UIs don't handle 'null' input values.
+ * @param param to encode
+ * @returns encoded part or null.
+ */
+export function encodeWithNullForEmpty(param: string) {
+  return param ? encodeURIComponent(param) : "null";
+}
+
+/**
+ * Covers some idiosyncracies in the Decisions API, related to return types,
+ * and common result wrappers.
+ * @param url to fetch
+ * @param propertyName to pull data from, if provided
+ * @returns promise resolving expected type
+ */
+export function getWrappedFetch<T>(url: string, propertyName?: string) {
+  return new Promise<T>(async (resolve, reject) => {
+    try {
+      const response = await fetch(url, {
+        mode: ApiConfig.getFetchMode()
+      });
+      return getResponseJson(
+        response,
+        (json: any) => {
+          return propertyName ? resolve(json[propertyName]) : resolve(json);
+        },
+        reject
+      );
+    } catch (reason) {
+      reject(reason);
+    }
+  });
+}
+
+// DRY this up with the above
+export function getWrappedPostFetch<T>(
+  url: string,
+  body: {},
+  propertyName?: string
+) {
+  return new Promise<T>(async (resolve, reject) => {
+    try {
+      const response = await fetch(url, makePostFetchInit(body));
+      return getResponseJson(
+        response,
+        (json: any) => {
+          return propertyName ? resolve(json[propertyName]) : resolve(json);
+        },
+        reject
+      );
+    } catch (reason) {
+      reject(reason);
+    }
+  });
+}
+
+export function makePostFetchInit(body: {}): RequestInit {
+  return {
+    body: JSON.stringify({ outputtype: "RawJson", ...body }),
+    method: "POST",
+    mode: ApiConfig.getFetchMode()
+  };
+}
+
 function isJsonContentType(contentType: string | null) {
-  return !contentType ? false : contentType.toUpperCase().includes(JSON);
+  return !contentType ? false : contentType.toUpperCase().includes("JSON");
 }

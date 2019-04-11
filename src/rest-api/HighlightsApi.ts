@@ -31,7 +31,7 @@ function getWinnerInfoFromSummary(
   json: DoneSortedArray,
   selector: ScoreSelector
 ): WinnerInfo {
-  const summaries = json.Done["Sorted Array"];
+  const summaries = json["Sorted Array"];
   if (!summaries) {
     return {
       name: "Nobody?",

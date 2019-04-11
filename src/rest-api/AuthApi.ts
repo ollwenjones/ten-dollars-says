@@ -16,6 +16,8 @@ export interface ILoginUserResult {
 const SESSION_ID_COOKIE = "TdsSessionId";
 const USER_COOKIE = "DecisionsUsername";
 
+// TODO API call to call on load, to ping with a session ID to find out if it's valid?
+
 /**
  * Auth and session related API calls.
  */
@@ -34,12 +36,14 @@ export const AuthApi = {
    */
   login: (userid: string, password: string) =>
     new Promise<string>((resolve, reject) =>
-      fetch(`${ApiConfig.restRoot}/REST/AccountService/LoginUser`, {
+      fetch(`${ApiConfig.restRoot}REST/AccountService/LoginUser`, {
         body: JSON.stringify({ userid, password, outputType: "JSON" }),
         method: "POST",
         mode: ApiConfig.getFetchMode()
       })
         .then(response =>
+          // TODO check response status, prior to trying to parse JSON to avoid error
+          // TODO use normal decisions cookie, but _clear_ it, if it's not a good session
           response.json().then((json: ILoginJson) => {
             const id = sessionIdSelector(json.LoginUserResult);
             Cookies.set(SESSION_ID_COOKIE, id);
