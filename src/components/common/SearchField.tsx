@@ -42,7 +42,10 @@ export default class SearchField extends React.Component<
   onSuggestionsFetchRequested = debounce(
     ({ value }: SuggestionsFetchRequestedParams) =>
       PartyNameApi.getPartyNames(value)
-        .then(suggestions => this.setState({ suggestions }))
+        .then(suggestions => {
+          suggestions = Array.isArray(suggestions) ? suggestions : [];
+          this.setState({ suggestions });
+        })
         .catch(() => this.setState({ suggestions: [] })),
     SEARCH_DEBOUNCE_INTERVAL
   );
